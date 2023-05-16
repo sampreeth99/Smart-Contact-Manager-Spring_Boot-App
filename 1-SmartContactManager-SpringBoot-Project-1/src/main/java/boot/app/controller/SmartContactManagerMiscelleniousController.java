@@ -10,12 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/contactManager")
 public class SmartContactManagerMiscelleniousController{
 	
-	/*
-	@GetMapping("/home")
-	public String showHomePage() {
-		return "home";
-	}
-	*/
 	
 	
 }
