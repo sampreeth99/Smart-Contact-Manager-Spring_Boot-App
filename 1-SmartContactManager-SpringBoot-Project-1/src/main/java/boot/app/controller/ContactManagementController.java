@@ -1,8 +1,11 @@
 package boot.app.controller;
 
+import java.net.http.HttpRequest;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.tomcat.util.http.fileupload.RequestContext;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import boot.app.AddContact.service.IAddContactService;
+import boot.app.EditContact.service.IEditContactService;
 import boot.app.ShowContact.service.IShowContactService;
 import boot.app.entity.ContactDetails;
+import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import jakarta.annotation.PostConstruct;
 
 @Controller
@@ -26,6 +31,13 @@ public class ContactManagementController {
 	
 	@Autowired
 	private IShowContactService showService;
+	
+	
+
+	@Autowired
+	private IEditContactService editService;
+	
+	
 	
 	
 	
@@ -55,7 +67,33 @@ public class ContactManagementController {
 		List<ContactDetails> cd=showService.showParticularDetails(cid);
 		map.put("contact", cd);
 		System.out.println(cid);
-		return "MoreInfo";
+		return "MoreInfo";	
+	}
+
+	 
+	@GetMapping("/edit")
+	public String showEditFormPage(@ModelAttribute("cm") ContactDetails con, @RequestParam List<Integer> no) {
+		
+		List<ContactDetails> cd=showService.showParticularDetails(no);
+		
+		 cd.forEach(t -> {
+			BeanUtils.copyProperties(t, con);
+		 });
+		
+		
+		System.out.println(cd);
+		
+		System.out.println("ContactManagementController.showEditFormPage()");
+		
+		return "editForm";
+		
+	}
+	
+	@PostMapping("/edit/submit")
+	public String saveEditedForm(@ModelAttribute("cm") ContactDetails con,Map<String, Object> map) {
+				String editmsg=editService.editContactById(con);
+				map.put("editMsg", editmsg);
+		return "editForm";
 		
 		
 	}

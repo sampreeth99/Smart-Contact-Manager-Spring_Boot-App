@@ -8,7 +8,7 @@
 
     <style>
         .card{
-            margin-left: 201px;
+            margin-left: 400px;
             
             
         }
@@ -24,55 +24,83 @@
         td{
             margin-left: 50px;
         }
+        
+        .dl-flex{
+       columns: 2;
+       column-gap: 10px;
+       column-width: 30px;
+
+        }
+        
+        dt{
+        font-size: 25px;
+        color: pink;
+        
+        }
+        
+        dd{
+        font-size: 26px;
+        }
+        
+        #con-Name{
+         margin-top: 25px; 
+         margin-left: 150px;
+        }
+        
+        
     </style>
 
 </head>
 <body style="background-color: grey">
     <div>
        
-        <div class="card bg-dark" style="width: 900px;height: 600px;">
-            <div class="card-header bg-danger" style="width: 900px;height: 100px;">
-
+        <div class="card bg-dark text-center" style="width: 500px;height: 600px;">
+            <div class="card-header bg-danger " style="width: 500px;height: 150px;" th:each="cd:${contact}" >
+               
+                    <dl id="con-Name">
+                     <dt th:text="${cd.cName}"></dt>
+                    </dl>
+             
+					
             </div>
             <div class="card-body ">
-                <div class="card-text text-white">
-                  <div th:each="cd:${contact}">
-                   <table class=" text-white w-100">
-                      <tr >
-                        <td >Name</td>
-                        <td>:-</td>
-                        <td th:text="${cd.cName}"></td>
-                      </tr>
-
-                      <tr>
-                        <td>NickName</td>
-                        <td>:-</td>
-                        <td th:text="${cd.cNickName}"></td>
-                      </tr>
-                      
-                      <tr >
-                        <td>Mobile Number</td>
-                        <td>:-</td>
-                        <td th:text="${cd.cNo}"></td>
-                      </tr>
-                      <tr >
-                        <td>Destination</td>
-                        <td>:-</td>
-                        <td th:text="${cd.dest}"></td>
-                      </tr>
-                      
-                      
-                      <tr >
-                        <td>About</td>
-                        <td>:-</td>
-                        <td th:text="${cd.about}"></td>
-                      </tr>
-                      
-                   </table>
+                <div class="card-text text-white" th:each="cd:${contact}">
+                  <div  >
+                  
+                    <dl >
+                     <dt>Nick Name</dt>
+                     <dd th:text="${cd.cNickName}"></dd>
+                    </dl>
+                    
+                    <dl>
+                     <dt>Mobile Number</dt>
+                     <dd th:text="${cd.cNo}"></dd>
+                    </dl>
+                 
+                    <dl>
+                     <dt>Destination</dt>
+                     <dd th:text="${cd.dest}"></dd>
+                    </dl>
+                    
+                     <dl>
+                     <dt>About</dt>
+                     <dd th:text="${cd.about}"></dd>
+                    </dl>
                   </div>
                 </div>
 
 
+            </div>
+            
+            <div class="card-footer" style="width: 500px;height: 60px;background-color: white;" >
+            
+                    <div style="margin-top: px;" th:each="cd:${contact}">
+                    <a th:href="@{/management/edit(no=${cd.cId})}"> <span style="font-size: 35px; margin-right:25px; " class="bi bi-person-gear "></span></a>
+                      
+                    <a ><span style="font-size: 35px;" class="bi bi-trash-fill"></span></a>
+                   
+                   
+                    </div>
             </div>
            
 

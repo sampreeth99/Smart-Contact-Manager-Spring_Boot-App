@@ -28,21 +28,31 @@
 
     <div class="card  text-danger fw-bold m-2 mt-4 p-2 text-center border-danger" style="width: 500px;line-height: 40px;border-radius: 50px	; background-color: pink;">
         <div class="card-header">
-            <h3>Add Contact</h3> 
+            <h3>Edit Contact</h3> 
         </div>
        
         <div class="card-body ">
          <div class="text-center text-white">
-    <h5 style="font-weight: bold; font-family: cursive;color: black"><span th:text="${addResponse}"></span></h5>
+    <h5 style="font-weight: bold; font-family: cursive;color: black"><span th:text="${editMsg}"></span></h5>
     </div>
 
-            <form th:action="@{/management/save}" method="post" th:object="${contactDetails}" >
+            <form th:action="@{/management/edit/submit}" method="post" th:object="${cm}" >
+                <div>
+                     <label for="cId">
+                         Contact Id
+                     </label>
+                     <div>
+                         <input readonly="readonly" type="text" class="form-control " th:field="*{cId}" >
+                     </div>  
+         
+                </div>
+                
                 <div>
                      <label for="cName">
                          Contact Name 
                      </label>
                      <div>
-                         <input type="text" class="form-control " name="cName">
+                         <input type="text" class="form-control " th:field="*{cName}" >
                      </div>  
          
                 </div>
@@ -52,7 +62,7 @@
                       Nick Name 
                     </label>
                      <div id="input">
-                         <input class="form-control" type="text" name="cNickName">
+                         <input class="form-control" type="text" th:field="*{cNickName}">
                      </div>
                  </div>
          
@@ -63,7 +73,7 @@
                          Contact Number 
                      </label>
                      <div>
-                       <input class="form-control " type="number"   name="cNo">
+                       <input class="form-control " type="number" th:field="*{cNo}"  >
                       </div>
                 </div>
          
@@ -72,7 +82,7 @@
                          Contact Destination 
                      </label>
                      <div>
-                       <input class="form-control " type="text" name="dest">
+                       <input class="form-control " type="text" th:field="*{dest}" >
                      </div>
                  </div>
          
@@ -81,10 +91,10 @@
                      <div>
                      <label>About</label>
                      </div>
-                     <textarea rows="1" cols="57" name="about"></textarea>
+                     <textarea rows="1" cols="57" th:field="*{about}" ></textarea>
                  </div>
          
-                 <button class="btn btn-dark w-100 mt-2">Submit</button>
+                 <button class="btn btn-dark w-100 mt-2">Update</button>
              </form>
            
         </div>
