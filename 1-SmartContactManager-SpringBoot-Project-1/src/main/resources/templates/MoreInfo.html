@@ -95,16 +95,21 @@
             <div class="card-footer" style="width: 500px;height: 60px;background-color: white;" >
             
                     <div style="margin-top: px;" th:each="cd:${contact}">
-                    <a th:href="@{/management/edit(no=${cd.cId})}"> <span style="font-size: 35px; margin-right:25px; " class="bi bi-person-gear "></span></a>
+                    <a th:href="@{/management/edit(no=${cd.cId})}" target="_blank"> <span style="font-size: 35px; margin-right:25px; " class="bi bi-person-gear "></span></a>
                       
-                    <a ><span style="font-size: 35px;" class="bi bi-trash-fill"></span></a>
+                    <a th:href=@{/management/delete(no1=${cd.cId})} ><span style="font-size: 35px;" class="bi bi-trash-fill"></span></a>
                    
                    
                     </div>
             </div>
+            
+           
            
 
         </div>
+        <div>
+             <h2 th:text="${editMsg}" class="text-white"></h2>
+            </div>
 
 
 

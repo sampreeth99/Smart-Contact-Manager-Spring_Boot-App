@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import boot.app.AddContact.service.IAddContactService;
+import boot.app.DeleteContact.service.IDeleteContactService;
 import boot.app.EditContact.service.IEditContactService;
 import boot.app.ShowContact.service.IShowContactService;
 import boot.app.entity.ContactDetails;
@@ -32,10 +34,11 @@ public class ContactManagementController {
 	@Autowired
 	private IShowContactService showService;
 	
-	
-
 	@Autowired
 	private IEditContactService editService;
+
+	@Autowired
+	private IDeleteContactService deleteService;
 	
 	
 	
@@ -90,13 +93,22 @@ public class ContactManagementController {
 	}
 	
 	@PostMapping("/edit/submit")
-	public String saveEditedForm(@ModelAttribute("cm") ContactDetails con,Map<String, Object> map) {
+	public String saveEditedForm(@ModelAttribute("cm") ContactDetails con,Map<String, Object> map , RedirectAttributes r) {
 				String editmsg=editService.editContactById(con);
 				map.put("editMsg", editmsg);
-		return "editForm";
-		
-		
+				r.addFlashAttribute("editMsg",editmsg );
+		return "redirect:/";	
 	}
+	
+	@GetMapping("/delete")
+	public String deleteContactById(@RequestParam Integer no1, Map<String, Object> map) {
+		String msg=deleteService.removeById(no1);
+		map.put("delMsg", msg);
+		map.put("note", "Contact is Deleted Temporarily ... Deleted Contacts will be saved for Further references & Will Be Available In 'Trash' Section ");
+		return "del";
+	}
+	
+	
 	
 
 }

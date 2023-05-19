@@ -16,37 +16,52 @@
     padding: 5px;
     }
     
+    #trashdel:hover{
+     background-color: black;
+     
+    }
+    
+    
     .tbody-tr{
-    height: 35px;
+    height: 65px;
     text-align: center;
     font-size: 25px;
     font-weight: lighter;
     padding: 5px;
     
     }
+    
+    
        
     </style>
 </head>
 <body>
 
     <div>
-        <table class="table table-hover table-dark text-white table-stripped me-2" style="width: 1255px;background-color: grey;">
+        <table class="table table-hover table-dark text-white table-stripped me-2" style="width: 100%;background-color: grey;">
             <thead> 
                 <tr class="thead-tr"  >
-                    <th>Sno</th>
                     <th>Contact Name</th>
+                      <th >Nick Name</th>
                     <th>Mobile Number</th>
-                    <th >&nbsp</th>
+                      <th >Destination</th>
+                        <th >About</th>
+                        <th >&nbsp</th>
+                        
+                    
+                  
                     
                     </tr>
             </thead>
-            <tbody th:each="con:${allContactList}">
+            <tbody th:each="con:${TrashContacts}">
              <tr class="tbody-tr">
-                    <td th:text="${con.cId}"></td>
                     <td th:text="${con.cName}"></td>
+                    <td th:text="${con.cNickName}"></td>
                     <td th:text="${con.cNo}"></td>
-                    <td><a th:href="@{/management/moreContactInfo(cid=${con.cId})}"  style="text-decoration: none;" target="frame">more...</a></td>
-                </tr>
+                    <td th:text="${con.dest}"></td>
+                    <td th:text="${con.about}"></td>
+                    <td ><a  th:href="@{/contactManager/delete/permanently(cid=${con.cId})}" ><button id="trashdel" class="btn btn-danger text-white" >Delete Permanently</button></a></td>
+              </tr>
                
               
             </tbody>

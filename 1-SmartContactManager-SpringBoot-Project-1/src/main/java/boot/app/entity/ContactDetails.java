@@ -2,6 +2,8 @@ package boot.app.entity;
 
 import java.io.Serializable;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.annotation.Generated;
@@ -24,6 +26,9 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
+@SQLDelete(sql = "update CONTACT_DETAILS set STATUS='Disabled' where C_ID=?")
+//@Where(clause ="STATUS <> 'Disabled'")
+
 public class ContactDetails implements Serializable{
 	
 	@Id
@@ -43,6 +48,9 @@ public class ContactDetails implements Serializable{
 	
 	@Column(length = 80)
 	private String about;
+	
+	@Column(length = 20)
+	private String status="Enabled";
 	
 	//private MultipartFile profilePic;
 	

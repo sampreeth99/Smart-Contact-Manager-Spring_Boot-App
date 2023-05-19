@@ -9,6 +9,12 @@ import boot.app.entity.ContactDetails;
 
 public interface IContactDetailsRepository extends JpaRepository<ContactDetails, Integer> {
 	
+	@Query(value = "  from ContactDetails where status='Disabled'")
+	public List<ContactDetails> getAllTrashedContacts();
+	
+	
+	@Query(value = "  from ContactDetails where status='Enabled'")
+	public List<ContactDetails> getAllActiveContacts();
 	
 
 }

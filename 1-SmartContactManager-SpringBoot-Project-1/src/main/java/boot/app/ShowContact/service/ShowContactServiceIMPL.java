@@ -18,7 +18,7 @@ public  class ShowContactServiceIMPL implements IShowContactService {
 	@Override
 	public List<ContactDetails> showAllCon() {
 		conRepo.findAll();
-		return conRepo.findAll();
+		return conRepo.getAllActiveContacts();
 	}
 	
 	
