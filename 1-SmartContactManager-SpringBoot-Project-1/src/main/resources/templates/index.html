@@ -1,5 +1,5 @@
     <!DOCTYPE html>
-    <html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="base(page)" >
     <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,22 +25,21 @@
     
     <div style="margin-top: 50px;">
   
-    <a href="/management/showAllContacts" target="frame"><button class="btn btn-dark  m-2" style="height: 50px;width: 180px">My Contacts</button></a>
+    <a href="/management/showAllContacts" ><button class="btn btn-dark  m-2" style="height: 50px;width: 180px">My Contacts</button></a>
    
-     <a href="index.html" target="_blank"><button class="btn btn-dark  m-2" style="height: 50px;width: 180px">Add Contact</button></a>
+     <a href="/management/add" ><button class="btn btn-dark  m-2" style="height: 50px;width: 180px">Add Contact</button></a>
      
        <a href="/contactManager/trash/History" target="_blank"><button class="btn btn-dark  m-2" style="height: 50px;width: 180px">Trash</button></a>
    
-   
+ 
     </div>
 
     </nav>
     <main>
     
     
-    <iframe src="./welcome.html"  height="100%" width="100%" name="frame">
-    
-    </iframe>
+   
+   <div th:replace="${page}"></div>
         
     </main>
     </section>

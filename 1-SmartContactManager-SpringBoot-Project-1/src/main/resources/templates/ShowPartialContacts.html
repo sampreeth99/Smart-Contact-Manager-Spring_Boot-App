@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="index::base(~{::body})" >
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,7 +29,7 @@
 </head>
 <body>
 
-    <div>
+    <div >
         <table class="table table-hover table-dark text-white table-stripped me-2" style="width: 1255px;background-color: grey;">
             <thead> 
                 <tr class="thead-tr"  >
@@ -45,7 +45,7 @@
                     <td th:text="${con.cId}"></td>
                     <td th:text="${con.cName}"></td>
                     <td th:text="${con.cNo}"></td>
-                    <td><a th:href="@{/management/moreContactInfo(cid=${con.cId})}"  style="text-decoration: none;" target="frame">more...</a></td>
+                    <td><a th:href="@{/management/moreContactInfo(cid=${con.cId})}"  style="text-decoration: none;" >more...</a></td>
                 </tr>
                
               

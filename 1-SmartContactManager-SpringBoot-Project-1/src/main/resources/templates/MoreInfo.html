@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="index::base(~{::body})">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -95,7 +95,7 @@
             <div class="card-footer" style="width: 500px;height: 60px;background-color: white;" >
             
                     <div style="margin-top: px;" th:each="cd:${contact}">
-                    <a th:href="@{/management/edit(no=${cd.cId})}" target="_blank"> <span style="font-size: 35px; margin-right:25px; " class="bi bi-person-gear "></span></a>
+                    <a th:href="@{/management/edit(no=${cd.cId})}" > <span style="font-size: 35px; margin-right:25px; " class="bi bi-person-gear "></span></a>
                       
                     <a th:href=@{/management/delete(no1=${cd.cId})} ><span style="font-size: 35px;" class="bi bi-trash-fill"></span></a>
                    

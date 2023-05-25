@@ -21,6 +21,12 @@ public class SmartContactManagerMiscelleniousController{
 	@Autowired
 	private ITrashService trashService;
 	
+	@GetMapping("/")
+	public String getIndex(Map<String, Object> map) {
+		map.put("msg", "Hello Im from index Included into welcome page dynamically");
+		return "welcome";
+	}
+	
 	@GetMapping("/trash/History")
 	public String CheckTrashHistory(Map<String, Object> map) {
 		List<ContactDetails> cd=trashService.checkTrash();
