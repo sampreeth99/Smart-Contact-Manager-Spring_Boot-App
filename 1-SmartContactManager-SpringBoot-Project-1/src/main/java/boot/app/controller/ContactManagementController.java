@@ -6,9 +6,13 @@ import java.util.Map;
 
 import org.apache.tomcat.util.http.fileupload.RequestContext;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.PropertyEditorRegistrar;
+import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,9 +24,11 @@ import boot.app.AddContact.service.IAddContactService;
 import boot.app.DeleteContact.service.IDeleteContactService;
 import boot.app.EditContact.service.IEditContactService;
 import boot.app.ShowContact.service.IShowContactService;
+
 import boot.app.entity.ContactDetails;
 import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import jakarta.annotation.PostConstruct;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/management")
@@ -44,18 +50,35 @@ public class ContactManagementController {
 	
 	
 	
+	
+	
 	@GetMapping("/add")
-	public String showAddFormPage() {
+	public String showAddFormPage(@ModelAttribute("cd")	 ContactDetails contactDetails) {
+		
 		return "addForm";
+	
 	}
 	
 	
 	@PostMapping("/save")
-	public String saveContact(@ModelAttribute ContactDetails contactDetails,Map<String, Object> map) {
-		String resultMsg=addService.saveContact(contactDetails);
-		map.put("addResponse", resultMsg);
-		return "addForm";
+	
+	public String saveContact(@Validated @ModelAttribute("cd") ContactDetails cd,Map<String, Object> map,BindingResult re) {
+		  System.out.println("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
+		if (re.hasFieldErrors()) {
+
+			return "addForm";
+			
+		}
+		
+		String resultMsg=addService.saveContact(cd);
+		  map.put("addResponse", resultMsg);
+		  return "addForm";
 	}
+		 
+		
+		
+		
+		 
 	
 	@GetMapping("/showAllContacts")
 	public String showContacts(Map<String, Object> map) {

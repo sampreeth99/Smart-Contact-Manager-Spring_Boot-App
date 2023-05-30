@@ -17,6 +17,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -36,11 +41,13 @@ public class ContactDetails implements Serializable{
 	private Integer cId;
 
 	@Column(length = 20)
+	@NotEmpty
 	private String cName;
 	
 	@Column(length = 20)
 	private String cNickName;
 	
+	//@NotNull
 	private Long cNo;
 	
 	@Column(length = 20)
