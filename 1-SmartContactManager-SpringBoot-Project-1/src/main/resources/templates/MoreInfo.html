@@ -54,16 +54,23 @@
 <body style="background-color: grey">
     <div>
        
-        <div class="card bg-dark text-center" style="width: 500px;height: 600px;">
-            <div class="card-header bg-danger " style="width: 500px;height: 150px;" th:each="cd:${contact}" >
+        <div class="card bg-dark text-center" style="width: 500px;height: 550px; margin-left: 300px;">
+            <div class="card-header bg-white " style="width: 500px;height: 220px;" th:each="cd:${contact}" >
+                     
+                      <div >
+                    
+                    
+                    <img alt="Profile pic" th:src="@{'../../../images/'+${pic}}" style="width: 150px;height: 150px;border-radius: 40px;border: 2px solid black" >
+             
+                    </div>
                
                     <dl id="con-Name">
-                     <dt th:text="${cd.cName}"></dt>
+                     <dt th:text="${cd.cName}" style="font-size: 30px;font-weight: bold;font-family: serif;"></dt>
                     </dl>
-             
+                   
 					
             </div>
-            <div class="card-body ">
+            <div class="card-body " style="margin-top: 10px;" >
                 <div class="card-text text-white" th:each="cd:${contact}">
                   <div  >
                   

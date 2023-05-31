@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.tomcat.util.http.fileupload.RequestContext;
+import org.attoparser.config.ParseConfiguration;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.PropertyEditorRegistrar;
 import org.springframework.beans.PropertyEditorRegistry;
@@ -24,8 +25,10 @@ import boot.app.AddContact.service.IAddContactService;
 import boot.app.DeleteContact.service.IDeleteContactService;
 import boot.app.EditContact.service.IEditContactService;
 import boot.app.ShowContact.service.IShowContactService;
-
+import boot.app.contact.file.download.IContactFileDownloadService;
+import boot.app.contact.fileupload.FileUploadAddContactService;
 import boot.app.entity.ContactDetails;
+import boot.app.model.ContactManagerModel;
 import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
@@ -45,40 +48,47 @@ public class ContactManagementController {
 
 	@Autowired
 	private IDeleteContactService deleteService;
+
+	@Autowired
+	private FileUploadAddContactService fileUpService;
 	
-	
-	
-	
-	
+	@Autowired
+	private IContactFileDownloadService downService;
 	
 	
 	@GetMapping("/add")
-	public String showAddFormPage(@ModelAttribute("cd")	 ContactDetails contactDetails) {
+	public String showAddFormPage(@ModelAttribute("cd")	 ContactManagerModel t) {
 		
 		return "addForm";
-	
 	}
-	
 	
 	@PostMapping("/save")
 	
-	public String saveContact(@Validated @ModelAttribute("cd") ContactDetails cd,Map<String, Object> map,BindingResult re) {
+	public String saveContact(@Validated @ModelAttribute("cd") ContactManagerModel cd,Map<String, Object> map,BindingResult re) {
 		  System.out.println("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
-		if (re.hasFieldErrors()) {
-
-			return "addForm";
 			
-		}
-		
-		String resultMsg=addService.saveContact(cd);
-		  map.put("addResponse", resultMsg);
+		  Boolean flag=fileUpService.uploadProfilePicToFileSystem(cd);
+		  Boolean flag1=fileUpService.uploadProfilePicToServerFolder(cd);
+		  
+		  String resultMsg=null;
+		  if (flag=true) {
+			  if (flag1=true) {
+
+					 
+				  map.put("resultMsg", resultMsg);
+				 
+			}
+		  }
+		  
+		  
+		  
+		  cd.setCName(null);
+		  cd.setCNickName(null);
+		  cd.setCNo(null);
+		  cd.setDest(null);
+		  cd.setAbout(null);
 		  return "addForm";
 	}
-		 
-		
-		
-		
-		 
 	
 	@GetMapping("/showAllContacts")
 	public String showContacts(Map<String, Object> map) {
@@ -88,11 +98,32 @@ public class ContactManagementController {
 		
 	}
 	
+	
+	
+	Integer ifo=null;
 	@GetMapping("/moreContactInfo")
 	public String moreInfo(@RequestParam List<Integer> cid,Map<String, Object> map) {
 		List<ContactDetails> cd=showService.showParticularDetails(cid);
+		
 		map.put("contact", cd);
-		System.out.println(cid);
+		
+		
+		
+		cid.forEach(t -> {
+			ifo=t;
+		});
+		
+		String name=downService.oNameOfPic(ifo);
+		
+		map.put("pic", name);
+		System.out.println("oName from controller"+name);
+		
+		
+		System.out.println("more contact info"+cd);
+		System.out.println(cd);
+		
+		
+		
 		return "MoreInfo";	
 	}
 
@@ -130,8 +161,4 @@ public class ContactManagementController {
 		map.put("note", "Contact is Deleted Temporarily ... Deleted Contacts will be saved for Further references & Will Be Available In 'Trash' Section ");
 		return "del";
 	}
-	
-	
-	
-
 }

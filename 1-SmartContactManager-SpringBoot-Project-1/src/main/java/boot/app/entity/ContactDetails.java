@@ -59,8 +59,12 @@ public class ContactDetails implements Serializable{
 	@Column(length = 20)
 	private String status="Enabled";
 	
-	//private MultipartFile profilePic;
+	@Column(length = 100)
+	private String profilePicPath;
 	
+	
+	@Column(length =100)
+	private String originalPicName;
 	
 
 }

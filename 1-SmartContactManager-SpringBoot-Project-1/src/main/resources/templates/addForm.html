@@ -33,10 +33,10 @@
        
         <div class="card-body ">
          <div class="text-center text-white">
-    <h5 style="font-weight: bold; font-family: cursive;color: black"><span th:text="${addResponse}"></span></h5>
+    <h5 style="font-weight: bold; font-family: cursive;color: black"><span th:text="${resultMsg}"></span></h5>
     </div>
 
-            <form th:action="@{/management/save}" method="post" th:object="${cd}" >
+            <form th:action="@{/management/save}" method="post" th:object="${cd}" enctype="multipart/form-data">
                 <div>
                      <label for="cName">
                          Contact Name 
@@ -86,6 +86,11 @@
                      <label>About</label>
                      </div>
                      <textarea rows="1" cols="57" name="about" th:field="*{about}"></textarea>
+                 </div>
+                 
+                 <div>
+                   <input type="file"  th:field="*{profilePicMultiPart}"   >
+                 
                  </div>
          
                  <button class="btn btn-dark w-100 mt-2">Submit</button>

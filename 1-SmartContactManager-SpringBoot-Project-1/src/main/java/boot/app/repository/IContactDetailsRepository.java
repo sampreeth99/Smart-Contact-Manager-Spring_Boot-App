@@ -16,5 +16,11 @@ public interface IContactDetailsRepository extends JpaRepository<ContactDetails,
 	@Query(value = "  from ContactDetails where status='Enabled'")
 	public List<ContactDetails> getAllActiveContacts();
 	
+	@Query(value = " select originalPicName from ContactDetails where cId=:id")
+	public String getOName(Integer id);
+	
+	
+	
+	
 
 }
