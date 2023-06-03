@@ -24,6 +24,24 @@ public class ContactFIleDownload implements IContactFileDownloadService{
 		return s;
 	}
 	
+	@Override
+	public List<String> allOnameOfPic() {
+		
+		List<String> s=repo.AllgetOName();
+		
+		System.out.println(s);
+		return s;
+	}
+
+	@Override
+	public String getPaths(Integer id) {
+		return  repo.getPathById(id);
+		
+	}
+	
+
+	
+	
 	
 	
 	

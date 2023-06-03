@@ -32,10 +32,9 @@ import lombok.ToString;
 @Getter
 @ToString
 @SQLDelete(sql = "update CONTACT_DETAILS set STATUS='Disabled' where C_ID=?")
-//@Where(clause ="STATUS <> 'Disabled'")
+@Where(clause ="STATUS <> 'Disabled'")
 
 public class ContactDetails implements Serializable{
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer cId;

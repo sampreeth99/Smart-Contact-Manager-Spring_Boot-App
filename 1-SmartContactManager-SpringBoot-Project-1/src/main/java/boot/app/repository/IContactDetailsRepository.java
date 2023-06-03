@@ -19,7 +19,12 @@ public interface IContactDetailsRepository extends JpaRepository<ContactDetails,
 	@Query(value = " select originalPicName from ContactDetails where cId=:id")
 	public String getOName(Integer id);
 	
+	@Query(value = " select originalPicName from ContactDetails ")
+	public List<String> AllgetOName();
 	
+
+	@Query(value = " select profilePicPath from ContactDetails where cId=:id")
+	public String getPathById(Integer id);
 	
 	
 

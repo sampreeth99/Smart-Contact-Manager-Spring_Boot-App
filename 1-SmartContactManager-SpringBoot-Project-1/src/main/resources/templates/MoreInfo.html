@@ -49,8 +49,12 @@
         
         
     </style>
+    
+    <script type="text/javascript">
+    
+    </script>
 
-</head>
+</head>	
 <body style="background-color: grey">
     <div>
        
@@ -60,13 +64,15 @@
                       <div >
                     
                     
-                    <img alt="Profile pic" th:src="@{'../../../images/'+${pic}}" style="width: 150px;height: 150px;border-radius: 40px;border: 2px solid black" >
-             
+                   <button  data-bs-toggle="modal" data-bs-target="#mod" class="bg-white" style="border-radius: 25px;border-style: none;"> <img alt="Profile pic" th:src="@{'../../../images/'+${pic}}" style="width: 180px;height: 150px;border-radius: 30px;border: 2px solid black" >
+             </button>
                     </div>
-               
+                    
+                    
                     <dl id="con-Name">
-                     <dt th:text="${cd.cName}" style="font-size: 30px;font-weight: bold;font-family: serif;"></dt>
+                     <dt th:text="${cd.cName}" style="font-size:30px;font-weight: bold;font-family: serif;"></dt>
                     </dl>
+                    
                    
 					
             </div>
@@ -83,7 +89,7 @@
                      <dt>Mobile Number</dt>
                      <dd th:text="${cd.cNo}"></dd>
                     </dl>
-                 
+                 	
                     <dl>
                      <dt>Destination</dt>
                      <dd th:text="${cd.dest}"></dd>
@@ -109,6 +115,31 @@
                    
                     </div>
             </div>
+            
+             <!-- Modal start  -->
+                    
+                    <div class="modal" id="mod" >
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-body" style="height: 520px;width: 400px;" th:each="cd:${contact}" >
+                          <img class="p-1 pb-3 ms-4 m-2" alt="Profile pic" th:src="@{'../../../images/'+${pic}}"  style="width: 420px;height:450px";>
+                          <a th:href="@{./download(id=${cd.cId})}" class="text-center" style="margin-left: 100px;text-decoration: none;color: black;font-weight: bold;"><span class="bi bi-download m-1 text-dark " style="font-weight: bold;" ></span>Save</a>
+                        
+                         
+                         	
+                          </div>
+                          
+                        </div>
+                        <div>
+                        
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Modal End-->
+                    
+                   
+               
             
            
            

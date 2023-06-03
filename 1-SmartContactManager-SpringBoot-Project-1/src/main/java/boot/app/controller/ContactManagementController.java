@@ -1,9 +1,15 @@
 package boot.app.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.apache.tomcat.util.http.fileupload.RequestContext;
 import org.attoparser.config.ParseConfiguration;
 import org.springframework.beans.BeanUtils;
@@ -31,6 +37,10 @@ import boot.app.entity.ContactDetails;
 import boot.app.model.ContactManagerModel;
 import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 @Controller
@@ -94,6 +104,8 @@ public class ContactManagementController {
 	public String showContacts(Map<String, Object> map) {
 		List<ContactDetails> list=showService.showAllCon();
 		map.put("allContactList", list);
+		List<String> all=downService.allOnameOfPic();
+		map.put("all", all);
 		return "ShowPartialContacts";
 		
 	}
@@ -121,9 +133,6 @@ public class ContactManagementController {
 		
 		System.out.println("more contact info"+cd);
 		System.out.println(cd);
-		
-		
-		
 		return "MoreInfo";	
 	}
 
@@ -160,5 +169,38 @@ public class ContactManagementController {
 		map.put("delMsg", msg);
 		map.put("note", "Contact is Deleted Temporarily ... Deleted Contacts will be saved for Further references & Will Be Available In 'Trash' Section ");
 		return "del";
+	}
+	
+	@GetMapping("/download")
+	public  String downloadImage(@RequestParam Integer id , HttpServletResponse res,HttpServletRequest req) throws IOException{
+	
+		String  pathName=downService.getPaths(id);
+		 System.out.println(pathName);
+		 
+		 File f=new File(pathName);
+		 
+		 ServletContext sc=req.getServletContext();
+		 try {
+			FileInputStream fi=new FileInputStream(f);
+			long len=f.length();			
+			ServletOutputStream s=res.getOutputStream();
+			res.setContentLengthLong(len);
+			
+			String mime=sc.getMimeType("f");
+			mime=mime==null?"application/octet-stream":mime;
+			res.setContentType(mime);
+			System.out.println(mime);
+			
+			res.setHeader("Content-Disposition", "attachment;fileName="+f.getName());
+			
+			IOUtils.copy(fi, s);
+			
+		} catch (FileNotFoundException e) {
+			
+			e.printStackTrace();
+		}
+		 
+		 return null;
+		 		 
 	}
 }
