@@ -187,11 +187,11 @@ public class ContactManagementController {
 			res.setContentLengthLong(len);
 			
 			String mime=sc.getMimeType("f");
-			mime=mime==null?"application/octet-stream":mime;
+			//mime=mime==null?"application/octet-stream":mime;
 			res.setContentType(mime);
 			System.out.println(mime);
 			
-			res.setHeader("Content-Disposition", "attachment;fileName="+f.getName());
+			res.setHeader("Content-Disposition", "attachment;filename="+f.getName());
 			
 			IOUtils.copy(fi, s);
 			
