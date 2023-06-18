@@ -4,27 +4,23 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.apache.tomcat.util.http.fileupload.RequestContext;
-import org.attoparser.config.ParseConfiguration;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.PropertyEditorRegistrar;
-import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import boot.app.AddContact.service.IAddContactService;
@@ -35,24 +31,24 @@ import boot.app.contact.file.download.IContactFileDownloadService;
 import boot.app.contact.fileupload.FileUploadAddContactService;
 import boot.app.entity.ContactDetails;
 import boot.app.model.ContactManagerModel;
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
-import jakarta.annotation.PostConstruct;
+import boot.app.repository.IContactDetailsRepository;
+import boot.app.validation.FormADDValidation;
+import boot.app.validation.FormEDITValidation;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/management")
 public class ContactManagementController {
-	
+
 	@Autowired
 	private IAddContactService addService;
-	
+
 	@Autowired
 	private IShowContactService showService;
-	
+
 	@Autowired
 	private IEditContactService editService;
 
@@ -61,146 +57,220 @@ public class ContactManagementController {
 
 	@Autowired
 	private FileUploadAddContactService fileUpService;
-	
+
 	@Autowired
 	private IContactFileDownloadService downService;
+
+	@Autowired
+	private IContactDetailsRepository repo;
 	
+	@Autowired
+	private FormADDValidation valid;
 	
+	@Autowired
+	private FormEDITValidation validEdit;
+	
+
 	@GetMapping("/add")
-	public String showAddFormPage(@ModelAttribute("cd")	 ContactManagerModel t) {
-		
+	public String showAddFormPage(@ModelAttribute("cd") ContactManagerModel t) {
 		return "addForm";
 	}
-	
-	@PostMapping("/save")
-	
-	public String saveContact(@Validated @ModelAttribute("cd") ContactManagerModel cd,Map<String, Object> map,BindingResult re) {
-		  System.out.println("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
-			
-		  Boolean flag=fileUpService.uploadProfilePicToFileSystem(cd);
-		  Boolean flag1=fileUpService.uploadProfilePicToServerFolder(cd);
-		  
-		  String resultMsg=null;
-		  if (flag=true) {
-			  if (flag1=true) {
 
-					 
-				  map.put("resultMsg", resultMsg);
-				 
+	@PostMapping("/save")
+
+	public String saveContact(@ModelAttribute("cd") ContactManagerModel cd, Map<String, Object> map, BindingResult errors) {
+		System.out.println("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
+			System.out.println("entered into controller"+cd);
+			
+		if(valid.supports(ContactManagerModel.class)) {
+			valid.validate(cd, errors);
+			
+			
+			if(errors.hasErrors()) {
+				System.out.println("Error count=="+errors.getErrorCount());
+				System.out.println(errors.getFieldError().toString());
+				
+				
+				return "addForm";
 			}
-		  }
-		  
-		  
-		  
-		  cd.setCName(null);
-		  cd.setCNickName(null);
-		  cd.setCNo(null);
-		  cd.setDest(null);
-		  cd.setAbout(null);
-		  return "addForm";
+			
+			
+			
+	         
+		}
+		
+		
+		ContactDetails c = new ContactDetails();
+
+		c.setCName(cd.getCName());
+		c.setCNickName(cd.getCNickName());
+		c.setCNo(cd.getCNo());
+		c.setDest(cd.getDest());
+		c.setAbout(cd.getAbout());
+
+		System.out.println("object c=="+c);
+
+		
+		addService.saveContact(c);
+
+		
+		cd.setCName(null);
+		cd.setCNickName(null);
+		cd.setCNo(null);
+		cd.setDest(null);
+		cd.setAbout(null);
+
+
+		
+				return "addForm";
 	}
-	
+
+	@PostMapping("/profile/save")
+	public String updateProfilePicture(@RequestParam("profile") MultipartFile profile, @RequestParam Integer uploadid) {
+		System.out.println("req param is::" + profile.getName());
+		System.out.println("uploadId::" + uploadid);
+
+		Optional<ContactDetails> op = repo.findById(uploadid);
+		ContactDetails cf = null;
+		if (op.isPresent()) {
+			cf = op.get();
+
+		}
+
+		ContactDetails c = new ContactDetails();
+		c.setCId(uploadid);
+		c.setCName(cf.getCName());
+		c.setCNickName(cf.getCNickName());
+		c.setCNo(cf.getCNo());
+		c.setAbout(cf.getAbout());
+		c.setDest(cf.getDest());
+		Boolean f = fileUpService.uploadProfilePicToServerFolder(profile, c);
+		System.out.println("change profile result::" + f);
+
+		return "hello";
+	}
+
 	@GetMapping("/showAllContacts")
 	public String showContacts(Map<String, Object> map) {
-		List<ContactDetails> list=showService.showAllCon();
-		map.put("allContactList", list);
-		List<String> all=downService.allOnameOfPic();
-		map.put("all", all);
+		List<ContactDetails> page = showService.showAllCon();
+		System.out.println("No of contact from backend::" + page.size());
+		map.put("allContactList", page);
+
 		return "ShowPartialContacts";
+	}
+	
+	@GetMapping("/showAllContactsByPage")
+	public String showContactsbypagination( @PageableDefault(page = 0,size = 5) org.springframework.data.domain.Pageable p, Map<String, Object> map) {
+		Page<ContactDetails> page = showService.showAllContacts(p);
 		
+		map.put("allContactList", page.getContent());
+		map.put("totalPages", page.getTotalPages());
+		map.put("currPageNo", page.getNumber());
+		map.put("next", page.hasNext());
+		
+		
+		
+		
+
+		return "ShowContacts";
 	}
 	
 	
+		
 	
-	Integer ifo=null;
+
 	@GetMapping("/moreContactInfo")
-	public String moreInfo(@RequestParam List<Integer> cid,Map<String, Object> map) {
-		List<ContactDetails> cd=showService.showParticularDetails(cid);
-		
-		map.put("contact", cd);
-		
-		
-		
-		cid.forEach(t -> {
-			ifo=t;
-		});
-		
-		String name=downService.oNameOfPic(ifo);
-		
+	public String moreInfo(@RequestParam Integer cid, Map<String, Object> map) {
+
+		ContactDetails d = showService.getAllContactDetailsById(cid);
+		map.put("contact", d);
+
+		String name = downService.oNameOfPic(cid);
 		map.put("pic", name);
-		System.out.println("oName from controller"+name);
-		
-		
-		System.out.println("more contact info"+cd);
-		System.out.println(cd);
-		return "MoreInfo";	
+		System.out.println("oName from controller" + name);
+
+		return "moreInfo";
 	}
 
-	 
+	ContactDetails ifo = null;
+
 	@GetMapping("/edit")
-	public String showEditFormPage(@ModelAttribute("cm") ContactDetails con, @RequestParam List<Integer> no) {
-		
-		List<ContactDetails> cd=showService.showParticularDetails(no);
-		
-		 cd.forEach(t -> {
-			BeanUtils.copyProperties(t, con);
-		 });
-		
-		
-		System.out.println(cd);
-		
+	public String showEditFormPage(@ModelAttribute("cm") ContactDetails con, @RequestParam Integer no) {
+		// Object[] or=showService.showParticularDetails(no);
+
+		ContactDetails d = showService.getAllContactDetailsById(no);
+		BeanUtils.copyProperties(d, con, "profilePicPath", "originalPicName");
+
+		// System.out.println("From edit link:::"+obj);
 		System.out.println("ContactManagementController.showEditFormPage()");
-		
 		return "editForm";
-		
 	}
-	
+
 	@PostMapping("/edit/submit")
-	public String saveEditedForm(@ModelAttribute("cm") ContactDetails con,Map<String, Object> map , RedirectAttributes r) {
-				String editmsg=editService.editContactById(con);
-				map.put("editMsg", editmsg);
-				r.addFlashAttribute("editMsg",editmsg );
-		return "redirect:/";	
+	public String saveEditedForm(@ModelAttribute("cm") ContactDetails con, Map<String, Object> map,
+			RedirectAttributes r,BindingResult errors) {
+
+
+		if(validEdit.supports(ContactDetails.class)) {
+			validEdit.validate(con, errors);
+			
+			
+			if(errors.hasErrors()) {
+				System.out.println("Error count=="+errors.getErrorCount());
+				System.out.println(errors.getFieldError().toString());
+				return "editForm";
+			}
+		}
+			
+		
+		
+		
+		System.out.println("from edit submit::" + con);
+
+		String oname = downService.oNameOfPic(con.getCId());
+		String p = downService.getPaths(con.getCId());
+
+		con.setOriginalPicName(oname);
+		con.setProfilePicPath(p);
+
+		String editmsg = editService.editContactById(con);
+		map.put("editMsg", editmsg);
+		r.addFlashAttribute("editMsg", editmsg);
+		return "welcome";
 	}
-	
+
 	@GetMapping("/delete")
 	public String deleteContactById(@RequestParam Integer no1, Map<String, Object> map) {
-		String msg=deleteService.removeById(no1);
+		String msg = deleteService.removeById(no1);
 		map.put("delMsg", msg);
-		map.put("note", "Contact is Deleted Temporarily ... Deleted Contacts will be saved for Further references & Will Be Available In 'Trash' Section ");
+		map.put("note",
+				"Contact is Deleted Temporarily ... Deleted Contacts will be saved for Further references & Will Be Available In 'Trash' Section ");
 		return "del";
 	}
-	
+
 	@GetMapping("/download")
-	public  String downloadImage(@RequestParam Integer id , HttpServletResponse res,HttpServletRequest req) throws IOException{
-	
-		String  pathName=downService.getPaths(id);
-		 System.out.println(pathName);
-		 
-		 File f=new File(pathName);
-		 
-		 ServletContext sc=req.getServletContext();
-		 try {
-			FileInputStream fi=new FileInputStream(f);
-			long len=f.length();			
-			ServletOutputStream s=res.getOutputStream();
+	public String downloadImage(@RequestParam Integer id, HttpServletResponse res, HttpServletRequest req)
+			throws IOException {
+
+		String pathName = downService.getPaths(id);
+		System.out.println(pathName);
+		File f = new File(pathName);
+		ServletContext sc = req.getServletContext();
+		try {
+			FileInputStream fi = new FileInputStream(f);
+			long len = f.length();
+			ServletOutputStream s = res.getOutputStream();
 			res.setContentLengthLong(len);
-			
-			String mime=sc.getMimeType("f");
-			//mime=mime==null?"application/octet-stream":mime;
+			String mime = sc.getMimeType("f");
+			// mime=mime==null?"application/octet-stream":mime;
 			res.setContentType(mime);
 			System.out.println(mime);
-			
-			res.setHeader("Content-Disposition", "attachment;filename="+f.getName());
-			
+			res.setHeader("Content-Disposition", "attachment;filename=" + f.getName());
 			IOUtils.copy(fi, s);
-			
 		} catch (FileNotFoundException e) {
-			
+
 			e.printStackTrace();
 		}
-		 
-		 return null;
-		 		 
+		return null;
 	}
 }

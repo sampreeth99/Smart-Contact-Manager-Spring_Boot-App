@@ -8,8 +8,7 @@ import lombok.Data;
 public class ContactManagerModel {
 	
 	
-
-	private String cName;
+   private String cName;
 	
 	private String cNickName;
 	
@@ -19,7 +18,6 @@ public class ContactManagerModel {
 	
 	private String about;
 	
-	private String status="Enabled";
 	
 	private MultipartFile profilePicMultiPart;
 	

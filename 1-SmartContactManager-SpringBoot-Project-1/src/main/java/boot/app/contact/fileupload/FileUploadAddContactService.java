@@ -2,14 +2,16 @@ package boot.app.contact.fileupload;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import boot.app.entity.ContactDetails;
 import boot.app.model.ContactManagerModel;
 
 public interface FileUploadAddContactService {
 	
-	public Boolean uploadProfilePicToFileSystem(ContactManagerModel contactManagerModel);
+	//public Boolean uploadProfilePicToFileSystem(ContactManagerModel contactManagerModel);
 	
-	public Boolean uploadProfilePicToServerFolder(ContactManagerModel contactManagerModel);
+	public Boolean uploadProfilePicToServerFolder(MultipartFile profile,ContactDetails contactDetails);
 	
+	public void deleteOldProfilePic(Integer id);
 	
 	
 

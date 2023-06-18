@@ -13,23 +13,51 @@
     grid-template-columns: 1fr 11fr;
     }
     
+    summary~button{
+   text-decoration: none;
+    color: white;
+    margin-top: 30px;
+    margin: 5px;
+    text-align: center;
+    border: solid grey;
+    }
+    
+    button a{
+    text-decoration: none;
+    font-size: 20px;
+    }
+    
+   
+    
+    
     </style>
     </head>
-    <body style="background-color: grey" >
+    <body style="background-color: grey;" >
     <div>
-    <header class="text-center  mt-2 ms-2 me-2 mb-1 p-2" style="background-color: black;color: white;font-family:inherit; ">
-    <h1 style="text-shadow: 2px 3px 3px red" > Smart Contact Manager</h1>
+    <header  class="text-center  mt-2 ms-2 me-2 mb-1 p-2" style="background-color: black;color: white;font-family:inherit;display: grid;
+     grid-template-columns: 11fr 2fr; ">
+    
+    
+    <h1 style="text-shadow: 2px 3px 3px red" th:text="#{contact.manager.main.title}"> </h1>
+    
     </header>
     <section >
     <nav style="background-color: pink;height: 650px;border-radius: 10px;" class="ms-2">
     
-    <div style="margin-top: 50px;">
+    <div id="navc" style="margin-top: 50px;font-size:35px;">
   
-    <a href="/management/showAllContacts" ><button class="btn btn-dark  m-2" style="height: 50px;width: 180px">My Contacts</button></a>
+   <a href="/contactManager/" ><button class="btn btn-dark  m-2" style="height: 50px;width: 180px; margin-bottom: 30px;"  th:text="#{button.home}"><span class="bi bi-house-door-fill" ></span></button></a>
    
-     <a href="/management/add" ><button class="btn btn-dark  m-2" style="height: 50px;width: 180px">Add Contact</button></a>
-     
-       <a href="/contactManager/trash/History" target="_blank"><button class="btn btn-dark  m-2" style="height: 50px;width: 180px">Trash</button></a>
+    <a href="/management/showAllContactsByPage" ><button class="btn btn-dark  m-2" style="height: 50px;width: 180px " th:text="#{button.mycontacts}"><span class="bi bi-file-person-fill" style="font-size: 25px;padding: 3px" ></span></button></a>
+   
+     <a href="/management/add" target="_blank" ><button class="btn btn-dark  m-2"  style="height: 50px;width: 180px;" th:text="#{button.addcontacts}"><span class="bi bi-person-add m-2" style="font-size: 25px;padding: 3px;" ></span></button></a>
+   
+   <details  class="bg-dark text-white m-2 p-2" style="width: 180px;font-size: 25px;border-radius: 5px;">
+   <summary th:text="#{button.language}"></summary>
+  <button class="btn "> <a href="?lang=en_Us" class="ms-4" >English</a><br></button>
+  <button class="btn "> <a href="?lang=fr_FR" class="ms-4" >French</a></button> 
+   </details>  
+   
    
  
     </div>

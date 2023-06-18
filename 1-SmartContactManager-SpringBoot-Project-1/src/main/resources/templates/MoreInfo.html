@@ -48,6 +48,11 @@
         }
         
         
+        
+        
+       
+        
+        
     </style>
     
     <script type="text/javascript">
@@ -55,48 +60,49 @@
     </script>
 
 </head>	
-<body style="background-color: grey">
+<body style="background-color: grey" th:each="cd:${contact}">
     <div>
        
-        <div class="card bg-dark text-center" style="width: 500px;height: 550px; margin-left: 300px;">
-            <div class="card-header bg-white " style="width: 500px;height: 220px;" th:each="cd:${contact}" >
+        <div class="card bg-dark text-center" style="width: 700px;height: 550px; margin-left: 300px;">
+            <div class="card-header bg-white " style="width: 700px;height: 220px;"  >
                      
                       <div >
                     
-                    
+
                    <button  data-bs-toggle="modal" data-bs-target="#mod" class="bg-white" style="border-radius: 25px;border-style: none;"> <img alt="Profile pic" th:src="@{'../../../images/'+${pic}}" style="width: 180px;height: 150px;border-radius: 30px;border: 2px solid black" >
              </button>
                     </div>
                     
                     
                     <dl id="con-Name">
-                     <dt th:text="${cd.cName}" style="font-size:30px;font-weight: bold;font-family: serif;"></dt>
+                     <dt th:text="${cd.cName}"  style="font-size:30px;font-weight: bold;font-family: serif;"></dt>
                     </dl>
                     
                    
 					
             </div>
             <div class="card-body " style="margin-top: 10px;" >
-                <div class="card-text text-white" th:each="cd:${contact}">
+                <div class="card-text text-white" >
                   <div  >
                   
+                  
                     <dl >
-                     <dt>Nick Name</dt>
+                     <dt th:text="#{contactnickname.title}"></dt>
                      <dd th:text="${cd.cNickName}"></dd>
                     </dl>
                     
                     <dl>
-                     <dt>Mobile Number</dt>
+                     <dt th:text="#{contactnumber.title}" ></dt>
                      <dd th:text="${cd.cNo}"></dd>
                     </dl>
                  	
                     <dl>
-                     <dt>Destination</dt>
+                     <dt th:text="#{contactdest.title}">Destination</dt>
                      <dd th:text="${cd.dest}"></dd>
                     </dl>
                     
                      <dl>
-                     <dt>About</dt>
+                     <dt th:text="#{contactabout.title}">About</dt>
                      <dd th:text="${cd.about}"></dd>
                     </dl>
                   </div>
@@ -105,12 +111,14 @@
 
             </div>
             
-            <div class="card-footer" style="width: 500px;height: 60px;background-color: white;" >
+            <div class="card-footer" style="width: px;height: 60px;background-color: white;" >
             
-                    <div style="margin-top: px;" th:each="cd:${contact}">
-                    <a th:href="@{/management/edit(no=${cd.cId})}" > <span style="font-size: 35px; margin-right:25px; " class="bi bi-person-gear "></span></a>
+                    <div style="margin-top:px;">
+                    <a class="ps-4 " th:href="@{/management/edit(no=${cd.cId})}" title="Edit" style="text-decoration: none;"> <span style="font-size: 20px; margin-right:25px; " class="bi bi-person-gear " th:text="#{edit.button.title}"></span></a>
                       
-                    <a th:href=@{/management/delete(no1=${cd.cId})} ><span style="font-size: 35px;" class="bi bi-trash-fill"></span></a>
+                    <a class="ps-4" th:href=@{/management/delete(no1=${cd.cId})} title="Delete Contact" style="text-decoration: none;"><span style="font-size: 20px;" class="bi bi-trash-fill" th:text="#{delete.button.title}"></span></a>
+                    
+                     <a class="ps-4" th:href=@{/contactManager/update/profile(uploadId=${cd.cId})} title="Change Profile" style="text-decoration: none;"><span style="font-size: 20px;" class="bi bi-pencil-fill" th:text="#{changeprofile.button.title}"></span></a>
                    
                    
                     </div>

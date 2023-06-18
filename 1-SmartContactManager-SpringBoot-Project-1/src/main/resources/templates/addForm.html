@@ -1,117 +1,424 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"  th:replace="index::base(~{::body})">
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="index::base(~{::body})">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
 <body>
-<!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+	<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta http	-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta http	-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
 
-    <style>
-    
-    .card{
-    box-shadow: 18px 15px 5px grey;
-    }
+<style>
+.card {
+	box-shadow: 18px 15px 5px grey;
+}
 
-    </style>
+.a:invalid ~button {
+	display: none;
+}
+
+.error {
+	color: red;
+}
+</style>
+
+<script type="text/javascript">
+	function doValidation(frm) {
+		var cname = document.getElementById('cName').value;
+
+		if (cname = "") {
+			var cname = document.getElementById('cName').value;
+			var cnameErr = document.getElementById('cnameCapCheck');
+			cnameErr.innerHTML = "Name cannot be null";
+		}
+
+	}
+
+	/*
+	 function ShowCnameMsg() {
+	 var cname = document.getElementById('cName');
+	 //cname.value="";
+
+	 var cnameErr = document.getElementById('cnameCapCheck');
+
+	 cnameErr.innerHTML = "Note:-Contact name Should be in Range of 4-15 characters";
+
+	 }
+
+	 function CheckNameInput() {
+	 var cnameErr = document.getElementById('cnameCapCheck');
+	 cnameErr.innerHTML = " ";
+
+	 var cname = document.getElementById('cName');
+
+	 if (cname.value.length < 4) {
+	 var cnameLengthErr = document.getElementById('cnameLengthCheck');
+	 cnameLengthErr.innerHTML = " Invalid Contact Name";
+
+	 }
+
+	 if (cname.value.length > 15) {
+	 var cnameLengthErr = document.getElementById('cnameLengthCheck');
+
+	 cnameLengthErr.innerHTML = " Invalid Contact Name";
+
+	 }
+
+	 if (cname.value.length > 4 && cname.value.length < 15) {
+	 var cnameLengthErr = document.getElementById('cnameLengthCheck');
+
+	 cnameLengthErr.innerHTML = " ";
+
+	 }
+	 }
+
+	 function ShowNickNameMsg() {
+	 var NickNameMsg = document.getElementById('cnicknameLengthCheck');
+	 NickNameMsg.innerHTML = " Nick Name should in in Range of 4-8 characters";
+
+	 }
+
+	 function CheckNickNameInput() {
+
+	 var NickNameMsg = document.getElementById('cnicknameLengthCheck');
+	 NickNameMsg.innerHTML = " ";
+
+	 var cnickname = document.getElementById('cNickName');
+
+	 if (cnickname.value.length < 4) {
+	 var cnicknameLengthErr = document
+	 .getElementById('cnicknameLengthCheck');
+	 cnicknameLengthErr.innerHTML = "Invalid Nick name";
+
+	 }
+	 if (cnickname.value.length > 8) {
+	 var cnicknameLengthErr = document
+	 .getElementById('cnicknameLengthCheck');
+
+	 cnicknameLengthErr.innerHTML = "Invalid Nick name";
+	 }
+	 if (cnickname.value.length > 4 && cnickname.value.length < 8) {
+	 var cnicknameN = document.getElementById('cNickName').value;
+	 cnicknameN.innerHTML = " ";
+
+	 }
+	 }
+
+	 function ShowCnoMsg() {
+	 var cNoErr = document.getElementById('cNoErr');
+	 cNoErr.innerHTML = "Contact Number Must be of Length 10 digits";
+	 }
+
+	 function CheckContactNo() {
+	 var cNoErr = document.getElementById('cNoErr');
+	 cNoErr.innerHTML = " ";
+
+	 var cno = document.getElementById('cNo');
+
+	 if (cno.value.length < 10) {
+	 var cNoErr = document.getElementById('cNoErr');
+	 cNoErr.innerHTML = "Contact Number is Invalid";
+
+	 }
+	 if (cno.value.length > 10) {
+	 var cNoErr = document.getElementById('cNoErr');
+	 cNoErr.innerHTML = "Contact Number is Invalid";
+
+	 }
+	 if (cno.value.length == 10) {
+	 var cNoErr = document.getElementById('cNoErr');
+	 cNoErr.innerHTML = " ";
+
+	 }
+
+	 }
+	
+	 function ShowDestMsg() {
+	 var  destMsg= document.getElementById('DestMsg');
+	 destMsg.innerHTML="Note :-Contact Destination Should be in Range of 3-12 characters";
+	
+	
+	 }
+
+	 function CheckDestinationInput() {
+	
+	 var  destMsg= document.getElementById('DestMsg');
+	 destMsg.innerHTML=" ";
+	
+	 var dest = document.getElementById('dest');
+	
+	 // Validation for Destination Length
+
+	 if (dest.value.length < 3) {
+	 var destLengthCheckErr = document.getElementById('destLengthCheck');
+	 destLengthCheck.innerHTML = "Invalid Contact Destination ";
+	 } 
+	 if (dest.value.length > 12) {
+	 var destLengthCheckErr = document.getElementById('destLengthCheck');
+	 destLengthCheck.innerHTML = "Invalid Contact Destination ";
+	 }
+	
+	 if (dest.value.length>3 && dest.value.length<12) {
+	 var destLengthCheckErr = document.getElementById('destLengthCheck');
+	 destLengthCheck.innerHTML = "  ";
+	 }
+	
+	 }
+	
+	 function ShowaboutMsg() {
+	 var aboutMsg = document.getElementById('AboutMsg');
+	 aboutMsg.innerHTML="About Field should be in range of 20-100 Characters";
+	
+	
+	 }
+
+	 function CheckAboutInput() {
+	
+	 var aboutMsg = document.getElementById('AboutMsg');
+	 aboutMsg.innerHTML="  ";
+	
+	
+	 var about = document.getElementById('about').value;
+	 var aboutInit = about.charAt(0);
+	 var aboutFirst = aboutInit.toUpperCase();
+	 var aboutErr = document.getElementById('aboutCapCheck');
+
+	 if (aboutInit == aboutFirst) {
+	 aboutErr.innerHTML = "";
+	 } else {
+	 aboutErr.innerHTML = "About Should Start with Caps";
+	 }
+
+	
+
+	 if (about.value.length > 100) {
+	 var aboutLengthCheckErr = document.getElementById('aboutLenCheck');
+	 aboutLengthCheckErr.innerHTML = "About is Inavlid";
+	 }
+
+	 if (about.value.length < 20) {
+	 var aboutLengthCheckErr = document.getElementById('aboutLenCheck');
+	 aboutLengthCheckErr.innerHTML = "About is Inavlid";
+	 }
+	 if (about.value.length >20 && about.value.length<100) {
+	 var aboutLengthCheckErr = document.getElementById('aboutLenCheck');
+	 aboutLengthCheckErr.innerHTML = " ";
+	 }
+	 }
+	 */
+</script>
+
+
 </head>
 <body class="bg-dark text-center">
-<div style="margin-left: 350px;">
-    
+	<div style="margin-left: 200px;">
+		<div
+			class="card  text-danger fw-bold m-2 mt-4 p-2 text-center border-danger"
+			style="width: 900px; line-height: 40px; border-radius: 50px; background-color: pink;">
+			<div class="card-header">
+				<h3 th:text="#{add.contact.title}"></h3>
+			</div>
+
+			<div class="card-body ">
+				<div class="text-center text-white">
+					<h5 style="font-weight: bold; font-family: cursive; color: black">
+						<span th:text="${resultMsg}"></span>
+					</h5>
+				</div>
 
 
-    <div class="card  text-danger fw-bold m-2 mt-4 p-2 text-center border-danger" style="width: 500px;line-height: 40px;border-radius: 50px	; background-color: pink;">
-        <div class="card-header">
-            <h3>Add Contact</h3> 
-        </div>
-       
-        <div class="card-body ">
-         <div class="text-center text-white">
-    <h5 style="font-weight: bold; font-family: cursive;color: black"><span th:text="${resultMsg}"></span></h5>
-    </div>
+				<!--<form th:action="@{/management/save}" method="post"
+					th:object="${cd}" enctype="multipart/form-data" >
+					<div>
+						<label for="cName"> Contact Name </label>
+						<div>
+							<input onfocus="ShowCnameMsg()" 
+								id="cName" type="text" class="form-control a   "
+							 	th:field="*{cName}" pattern="[a-zA-Z]{4,15}" >
+						</div>
 
-            <form th:action="@{/management/save}" method="post" th:object="${cd}" enctype="multipart/form-data">
-                <div>
-                     <label for="cName">
-                         Contact Name 
-                     </label>
-                     <div>
-                         <input type="text" class="form-control " th:field="*{cName}">
-                     </div>  
-                     
-                     <span th:if="${#fields.hasErrors('cName')}">Invalid Contact Name</span>
-                </div>
-                
-         
-                <div>
-                    <label for="cNickName">
-                      Nick Name 
-                    </label>
-                     <div id="input">
-                         <input class="form-control" type="text" th:field="*{cNickName}">
-                     </div>
-                 </div>
-                 
-                
-         
-                  
-         
-                <div>
-                     <label for="cNo" >
-                         Contact Number 
-                     </label>
-                     <div>
-                       <input class="form-control " type="number"   th:field="*{cNo}">
-                      </div>
-                </div>
-         
-                 <div>
-                     <label  for="dest">
-                         Contact Destination 
-                     </label>
-                     <div>
-                       <input class="form-control " type="text" th:field="*{dest}">
-                     </div>
-                 </div>
-         
-         
-                 <div>
-                     <div>
-                     <label>About</label>
-                     </div>
-                     <textarea rows="1" cols="57" name="about" th:field="*{about}"></textarea>
-                 </div>
-                 
-                 <div>
-                   <input type="file"  th:field="*{profilePicMultiPart}"   >
-                 
-                 </div>
-         
-                 <button class="btn btn-dark w-100 mt-2">Submit</button>
-             </form>
-            
-           
-        </div>
-       
-    
-    </div>
-    
-   
-</div> 
-    
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
-   
-</body>
-</html>
+						<div id="cnameCapCheck"></div>
 
+						<div id="cnameLengthCheck"></div>
+
+					</div>
+
+
+					<div>
+						<label for="cNickName"> Nick Name </label>
+						<div id="input">
+							<input class="form-control" onblur="CheckNickNameInput()"
+								onfocus="ShowNickNameMsg()" type="text" th:field="*{cNickName}">
+							<span id="length"></span>
+						</div>
+
+						<div id="cnicknameLengthCheck"></div>
+
+
+
+					</div>
+
+					<div>
+						<label for="cNo"> Contact Number </label>
+						<div>
+							<input class="form-control  " onfocus="ShowCnoMsg()"
+								onblur="CheckContactNo()" type="number" th:field="*{cNo}">
+
+						</div>
+						<div id="cNoErr"></div>
+
+					</div>
+
+					<div>
+						<label for="dest"> Contact Destination </label>
+						<div>
+							<input style="position: static;" class="form-control " onfocus="ShowDestMsg()"
+								onblur="CheckDestinationInput()" type="text" th:field="*{dest}">
+							<div id="destCapCheck"></div>
+						</div>
+
+                      
+						<div id="DestMsg"></div>
+                      
+						<div id="destCapCheck"></div>
+
+						<div id="destLengthCheck"></div>
+
+					</div>
+
+
+					<div>
+						<div>
+							<label>About</label>
+						</div>
+						<textarea rows="1" cols="57" name="about" th:field="*{about}" onfocus="ShowaboutMsg()"
+							onblur="CheckAboutInput()"></textarea>
+						<div id="aboutCapCheck"></div>
+						<div id="aboutLenCheck"></div>
+						<div id="AboutMsg"></div>
+						
+					</div>
+
+					<div>
+						<input type="file" th:field="*{profilePicMultiPart}">
+
+					</div>
+
+				<button id="submit" type="submit" class="btn btn-dark w-100 mt-2">Submit</button>	
+				</form> -->
+
+
+				<form th:action="@{/management/save}" method="post"
+					th:object="${cd}" enctype="multipart/form-data"
+					onsubmit="return doValidation(this)">
+					<div>
+						<label for="cName" th:text="#{contactname.title}">  </label>
+						<div>
+							<input id="cName" type="text" class="form-control  "
+								th:field="*{cName}">
+							<p class="text-dark" th:if="${#fields.hasErrors('cName')}"
+								th:errors="*{cName}" />
+						</div>
+						<div th:text="${cnErr}"></div>
+
+						<div id="cnameCapCheck"></div>
+						<div id="cnameLengthCheck"></div>
+					</div>
+					
+					
+					<div>
+						<label for="cNickName" th:text="#{contactnickname.title}"> </label>
+						<div id="input">
+							<input class="form-control" type="text" th:field="*{cNickName}">
+
+							<p class="text-dark" th:if="${#fields.hasErrors('cNickName')}"
+								th:errors="*{cNickName}" />
+							<span id="length"></span>
+
+						</div>
+
+						<div id="cnicknameLengthCheck"></div>
+
+
+
+					</div>
+
+					<div>
+						<label for="cNo" th:text="#{contactnumber.title}">  </label>
+						<div>
+							<input class="form-control  " type="number" th:field="*{cNo}">
+							<p class="text-dark" th:if="${#fields.hasErrors('cNo')}"
+								th:errors="*{cNo}" />
+						</div>
+						<div th:text="${cnoErr}"></div>
+						<div id="cNoErr"></div>
+
+					</div>
+
+					<div>
+						<label for="dest" th:text="#{contactdest.title}">  </label>
+						<div>
+							<input style="position: static;" class="form-control "
+								type="text" th:field="*{dest}">
+							<p class="text-dark" th:if="${#fields.hasErrors('dest')}"
+								th:errors="*{dest}" />
+							<div id="destCapCheck"></div>
+
+						</div>
+
+
+						<div id="DestMsg"></div>
+
+						<div id="destCapCheck"></div>
+
+						<div id="destLengthCheck"></div>
+
+					</div>
+					<div>
+						<div>
+							<label th:text="#{contactabout.title}"></label>
+						</div>
+						<textarea rows="1" cols="57" name="about" th:field="*{about}"></textarea>
+						<p class="text-dark" th:if="${#fields.hasErrors('about')}"
+							th:errors="*{about}" />
+
+						<div id="aboutCapCheck"></div>
+						<div id="aboutLenCheck"></div>
+						<div id="AboutMsg"></div>
+					</div>
+					<div>
+						<input type="file" th:field="*{profilePicMultiPart}">
+						<p class="text-dark"
+							th:if="${#fields.hasErrors('profilePicMultiPart')}"
+							th:errors="*{profilePicMultiPart}" />
+					</div>
+					<span class="text-primary" th:text="#{
+profile.maxsize.note}"></span> 
+						
+						
+						<button id="submit" 
+						class="btn btn-dark w-100 mt-2" th:text="#{addform.submit.title}"></button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+		integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+		integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+		crossorigin="anonymous"></script>
 </body>
 </html>

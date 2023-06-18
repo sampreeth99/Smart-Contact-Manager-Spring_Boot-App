@@ -20,6 +20,7 @@ import boot.app.model.ContactManagerModel;
 import boot.app.repository.IContactDetailsRepository;
 import jakarta.security.auth.message.callback.PrivateKeyCallback.Request;
 import jakarta.servlet.ServletContext;
+import jakarta.transaction.Transactional;
 
 @Service
 public class FileUploadIMPLService implements FileUploadAddContactService {
@@ -28,7 +29,7 @@ public class FileUploadIMPLService implements FileUploadAddContactService {
 	private IContactDetailsRepository repo;
 	
 	
-	
+	/*
 	@Value(value = "${file.dest.path}")
 	private   String FiledestPath;
 
@@ -53,7 +54,6 @@ public class FileUploadIMPLService implements FileUploadAddContactService {
 			c.setCNo(contactManagerModel.getCNo());
 			c.setDest(contactManagerModel.getDest());
 			c.setAbout(contactManagerModel.getAbout());
-			c.setStatus(contactManagerModel.getStatus());
 			c.setProfilePicPath(m.toString());
 			c.setOriginalPicName(oName);
 			
@@ -73,32 +73,39 @@ public class FileUploadIMPLService implements FileUploadAddContactService {
 		return uploaded;	
 	}
 	
-	
+	*/
 	
 	@Override
-	public Boolean uploadProfilePicToServerFolder(ContactManagerModel contactManagerModel) {
-		String oName=contactManagerModel.getProfilePicMultiPart().getOriginalFilename();
+	public Boolean uploadProfilePicToServerFolder(MultipartFile profile, ContactDetails contactDetails) {
+		String oName=profile.getOriginalFilename();
 		String cName=null;
 		//Path m=Paths.get(ServerdestPath+File.separator+oName);
 	 
 		
 	   boolean uploaded=false;
 		try {
-			
-
 			String destf="C:\\Smart-Contact-Manager-Spring_Boot-App\\1-SmartContactManager-SpringBoot-Project-1\\src\\main\\webapp\\images";
-			
-			Files.copy(contactManagerModel.getProfilePicMultiPart().getInputStream(),Paths.get(destf+File.separator+oName),StandardCopyOption.REPLACE_EXISTING);
+			Files.copy(profile.getInputStream(),Paths.get(destf+File.separator+oName),StandardCopyOption.REPLACE_EXISTING);
 			uploaded=true;
-			
-			
-		} catch (IOException e) {
-		
+			contactDetails.setProfilePicPath(Paths.get(destf+File.separator+oName).toString());
+			contactDetails.setOriginalPicName(oName);
+			repo.save(contactDetails);
+			System.out.println("from upload service::"+contactDetails);
+			uploaded=true;
+			} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-	
-		
-		return uploaded;
+			return uploaded;
 	}
+	
+	
+	@Override
+	
+	public void deleteOldProfilePic(Integer id) {
+//		 repo.deleteOldPathById(id);
+	
+	}
+	
+	
+	
 }
