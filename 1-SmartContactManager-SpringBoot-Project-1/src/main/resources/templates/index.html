@@ -25,24 +25,24 @@
     button a{
     text-decoration: none;
     font-size: 20px;
-    }
     
-   
+    }
+       
     
     
     </style>
     </head>
     <body style="background-color: grey;" >
     <div>
-    <header  class="text-center  mt-2 ms-2 me-2 mb-1 p-2" style="background-color: black;color: white;font-family:inherit;display: grid;
+    <header  class="  mt-2 ms-2 me-2 mb-1 p-2" style="background-color: black;color: white;font-family:inherit;display: grid;
      grid-template-columns: 11fr 2fr; ">
     
     
-    <h1 style="text-shadow: 2px 3px 3px red" th:text="#{contact.manager.main.title}"> </h1>
+    <h1 style="text-shadow: 2px 3px 3px red;margin-left: 600px;" th:text="#{contact.manager.main.title}"> </h1>
     
     </header>
     <section >
-    <nav style="background-color: pink;height: 650px;border-radius: 10px;" class="ms-2">
+    <nav style="background-color: pink;height: 720px;border-radius: 10px;" class="ms-2">
     
     <div id="navc" style="margin-top: 50px;font-size:35px;">
   
@@ -50,7 +50,10 @@
    
     <a href="/management/showAllContactsByPage" ><button class="btn btn-dark  m-2" style="height: 50px;width: 180px " th:text="#{button.mycontacts}"><span class="bi bi-file-person-fill" style="font-size: 25px;padding: 3px" ></span></button></a>
    
-     <a href="/management/add" target="_blank" ><button class="btn btn-dark  m-2"  style="height: 50px;width: 180px;" th:text="#{button.addcontacts}"><span class="bi bi-person-add m-2" style="font-size: 25px;padding: 3px;" ></span></button></a>
+     <a href="/management/add" target="_blank" ><button class="btn btn-dark  m-1"  style="height: 50px;width: 180px;" th:text="#{button.addcontacts}"><span class="bi bi-person-add m-2" style="font-size: 25px;padding: 3px;" ></span></button></a>
+   
+     <a href="/management/report/menu"  ><button class="btn btn-dark  m-2"  style="height: 50px;width: 180px;margin-left: 0px;padding: 0px"  th:text="#{button.report}" ><span class="" style="font-size: 25px;padding: 3px;"></span></button></a>
+     
    
    <details  class="bg-dark text-white m-2 p-2" style="width: 180px;font-size: 25px;border-radius: 5px;">
    <summary th:text="#{button.language}"></summary>
@@ -58,9 +61,7 @@
   <button class="btn "> <a href="?lang=fr_FR" class="ms-4" >French</a></button> 
    </details>  
    
-   
- 
-    </div>
+      </div>
 
     </nav>
     <main>

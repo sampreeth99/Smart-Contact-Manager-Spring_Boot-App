@@ -2,6 +2,8 @@ package boot.app.entity;
 
 import java.io.Serializable;
 
+import com.lowagie.text.Cell;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

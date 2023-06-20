@@ -63,13 +63,12 @@ public class ContactManagementController {
 
 	@Autowired
 	private IContactDetailsRepository repo;
-	
+
 	@Autowired
 	private FormADDValidation valid;
-	
+
 	@Autowired
 	private FormEDITValidation validEdit;
-	
 
 	@GetMapping("/add")
 	public String showAddFormPage(@ModelAttribute("cd") ContactManagerModel t) {
@@ -78,28 +77,23 @@ public class ContactManagementController {
 
 	@PostMapping("/save")
 
-	public String saveContact(@ModelAttribute("cd") ContactManagerModel cd, Map<String, Object> map, BindingResult errors) {
+	public String saveContact(@ModelAttribute("cd") ContactManagerModel cd, Map<String, Object> map,
+			BindingResult errors) {
 		System.out.println("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
-			System.out.println("entered into controller"+cd);
-			
-		if(valid.supports(ContactManagerModel.class)) {
+		System.out.println("entered into controller" + cd);
+
+		if (valid.supports(ContactManagerModel.class)) {
 			valid.validate(cd, errors);
-			
-			
-			if(errors.hasErrors()) {
-				System.out.println("Error count=="+errors.getErrorCount());
+
+			if (errors.hasErrors()) {
+				System.out.println("Error count==" + errors.getErrorCount());
 				System.out.println(errors.getFieldError().toString());
-				
-				
+
 				return "addForm";
 			}
-			
-			
-			
-	         
+
 		}
-		
-		
+
 		ContactDetails c = new ContactDetails();
 
 		c.setCName(cd.getCName());
@@ -108,21 +102,17 @@ public class ContactManagementController {
 		c.setDest(cd.getDest());
 		c.setAbout(cd.getAbout());
 
-		System.out.println("object c=="+c);
+		System.out.println("object c==" + c);
 
-		
 		addService.saveContact(c);
 
-		
 		cd.setCName(null);
 		cd.setCNickName(null);
 		cd.setCNo(null);
 		cd.setDest(null);
 		cd.setAbout(null);
 
-
-		
-				return "addForm";
+		return "addForm";
 	}
 
 	@PostMapping("/profile/save")
@@ -158,26 +148,19 @@ public class ContactManagementController {
 
 		return "ShowPartialContacts";
 	}
-	
+
 	@GetMapping("/showAllContactsByPage")
-	public String showContactsbypagination( @PageableDefault(page = 0,size = 5) org.springframework.data.domain.Pageable p, Map<String, Object> map) {
+	public String showContactsbypagination(
+			@PageableDefault(page = 0, size = 5) org.springframework.data.domain.Pageable p, Map<String, Object> map) {
 		Page<ContactDetails> page = showService.showAllContacts(p);
-		
+
 		map.put("allContactList", page.getContent());
 		map.put("totalPages", page.getTotalPages());
 		map.put("currPageNo", page.getNumber());
 		map.put("next", page.hasNext());
-		
-		
-		
-		
 
 		return "ShowContacts";
 	}
-	
-	
-		
-	
 
 	@GetMapping("/moreContactInfo")
 	public String moreInfo(@RequestParam Integer cid, Map<String, Object> map) {
@@ -208,23 +191,18 @@ public class ContactManagementController {
 
 	@PostMapping("/edit/submit")
 	public String saveEditedForm(@ModelAttribute("cm") ContactDetails con, Map<String, Object> map,
-			RedirectAttributes r,BindingResult errors) {
+			RedirectAttributes r, BindingResult errors) {
 
-
-		if(validEdit.supports(ContactDetails.class)) {
+		if (validEdit.supports(ContactDetails.class)) {
 			validEdit.validate(con, errors);
-			
-			
-			if(errors.hasErrors()) {
-				System.out.println("Error count=="+errors.getErrorCount());
+
+			if (errors.hasErrors()) {
+				System.out.println("Error count==" + errors.getErrorCount());
 				System.out.println(errors.getFieldError().toString());
 				return "editForm";
 			}
 		}
-			
-		
-		
-		
+
 		System.out.println("from edit submit::" + con);
 
 		String oname = downService.oNameOfPic(con.getCId());
@@ -273,4 +251,24 @@ public class ContactManagementController {
 		}
 		return null;
 	}
+
+	@GetMapping("/report/menu")
+	public String showReportGenerationPage() {
+		return "reportMenu";
+	}
+
+	@GetMapping("/report")
+	public String report(@RequestParam String type, Map<String, Object> map) {
+		List<ContactDetails> con = showService.showAllCon();
+		map.put("conList", con);
+		if (type.equalsIgnoreCase("excel"))
+
+			return "xlReport";
+
+		else
+
+			return "PDFreport";
+
+	}
+
 }

@@ -61,15 +61,15 @@
 
 </head>	
 <body style="background-color: grey" th:each="cd:${contact}">
-    <div>
+    <div >
        
-        <div class="card bg-dark text-center" style="width: 700px;height: 550px; margin-left: 300px;">
-            <div class="card-header bg-white " style="width: 700px;height: 220px;"  >
+        <div class="card bg-dark text-center" style="width: 700px;height: 650px; margin-left: 300px;margin-top: 25px;">
+            <div class="card-header bg-white " style="width: 700px;height: 320px;"  >
                      
                       <div >
                     
 
-                   <button  data-bs-toggle="modal" data-bs-target="#mod" class="bg-white" style="border-radius: 25px;border-style: none;"> <img alt="Profile pic" th:src="@{'../../../images/'+${pic}}" style="width: 180px;height: 150px;border-radius: 30px;border: 2px solid black" >
+                   <button  data-bs-toggle="modal" data-bs-target="#mod" class="bg-white" style="border-radius: 25px;border-style: none;margin-top: 10px;"> <img alt="Profile pic" th:src="@{'../../../images/'+${pic}}" style="width: 240px;height: 190px;border-radius: 30px;border: 2px solid black" >
              </button>
                     </div>
                     
@@ -129,8 +129,8 @@
                     <div class="modal" id="mod" >
                       <div class="modal-dialog">
                         <div class="modal-content">
-                          <div class="modal-body" style="height: 520px;width: 400px;" th:each="cd:${contact}" >
-                          <img class="p-1 pb-3 ms-4 m-2" alt="Profile pic" th:src="@{'../../../images/'+${pic}}"  style="width: 420px;height:450px";>
+                          <div class="modal-body" style="height: 650px;width: 400px;" th:each="cd:${contact}" >
+                          <img class="p-1 pb-3 ms-4 m-2" alt="Profile pic" th:src="@{'../../../images/'+${pic}}"  style="width: 420px;height:550px";>
                           <a th:href="@{./download(id=${cd.cId})}" class="text-center" style="margin-left: 100px;text-decoration: none;color: black;font-weight: bold;"><span class="bi bi-download m-1 text-dark " style="font-weight: bold;" ></span>Save</a>
                         
                          
