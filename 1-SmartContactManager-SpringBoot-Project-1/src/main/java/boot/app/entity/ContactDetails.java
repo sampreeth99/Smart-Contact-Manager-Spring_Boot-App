@@ -23,6 +23,7 @@ import lombok.ToString;
 //@Where(clause ="STATUS <> 'Disabled'")
 
 public class ContactDetails implements Serializable{
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer cId;

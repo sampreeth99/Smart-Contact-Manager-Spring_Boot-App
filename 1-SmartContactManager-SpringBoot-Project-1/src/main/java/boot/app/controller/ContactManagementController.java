@@ -63,13 +63,15 @@ public class ContactManagementController {
 
 	@Autowired
 	private IContactDetailsRepository repo;
-
+	
+	
 	@Autowired
 	private FormADDValidation valid;
 
 	@Autowired
 	private FormEDITValidation validEdit;
 
+	
 	@GetMapping("/add")
 	public String showAddFormPage(@ModelAttribute("cd") ContactManagerModel t) {
 		return "addForm";
@@ -79,15 +81,11 @@ public class ContactManagementController {
 
 	public String saveContact(@ModelAttribute("cd") ContactManagerModel cd, Map<String, Object> map,
 			BindingResult errors) {
-		System.out.println("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
-		System.out.println("entered into controller" + cd);
-
+		
 		if (valid.supports(ContactManagerModel.class)) {
 			valid.validate(cd, errors);
 
 			if (errors.hasErrors()) {
-				System.out.println("Error count==" + errors.getErrorCount());
-				System.out.println(errors.getFieldError().toString());
 
 				return "addForm";
 			}
@@ -102,9 +100,9 @@ public class ContactManagementController {
 		c.setDest(cd.getDest());
 		c.setAbout(cd.getAbout());
 
-		System.out.println("object c==" + c);
-
 		addService.saveContact(c);
+		
+		fileUpService.uploadProfilePicToServerFolder(cd.getProfilePicMultiPart(), c);
 
 		cd.setCName(null);
 		cd.setCNickName(null);
