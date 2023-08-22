@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="commonindex::base(~{::body})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<style>
+
+</style>
+
+<!-- 
+<script type="text/javascript">
+	function CheckNameInput() {
+		var cname = document.getElementById('cName').value;
+
+		var cnameIn = cname.charAt(0);
+
+		var cnameU = cnameIn.toUpperCase();
+
+		var cnameErr = document.getElementById('cnameCapCheck');
+
+		if (cnameIn == cnameU) {
+			cnameErr.innerHTML = "";
+		} else {
+
+			cnameErr.innerHTML = "Name Should Start With Caps";
+		}
+
+		var cname = document.getElementById('cName').value;
+		var cnameLen = cname.length;
+		console.log(cnameLen);
+
+		if (cnameLen < 4) {
+			var cnameLengthErr = document.getElementById('cnameLengthCheck');
+			cnameLengthErr.innerHTML = "Contact name Should be in Range of 4-15 characters";
+
+		} else if (cnameLen > 15) {
+			var cnameLengthErr = document.getElementById('cnameLengthCheck');
+
+			cnameLengthErr.innerHTML = "Contact name Should be in Range of 4-15 characters";
+
+		}
+	}
+
+	function CheckNickNameInput() {
+		var cnickname = document.getElementById('cNickName').value;
+		var cnicknameLen = cnickname.length;
+		console.log(cnicknameLen);
+
+		if (cnicknameLen < 4) {
+			var cnicknameLengthErr = document
+					.getElementById('cnicknameLengthCheck');
+			cnicknameLengthErr.innerHTML = "Nick name Should be in Range of 4-8 characters";
+
+		} else if (cnicknameLen > 8) {
+			var cnicknameLengthErr = document
+					.getElementById('cnicknameLengthCheck');
+
+			cnicknameLengthErr.innerHTML = "Nick name Should be in Range of 4-8 characters";
+
+		}
+	}
+	
+	 function CheckContactNo() {
+		 var cno = document.getElementById('cNo').value;
+			var cnoLen = cno.length;
+			console.log(cnoLen);
+
+			if (cnoLen!=10) {
+				var cNoErr = document
+						.getElementById('cNoErr');
+				cNoErr.innerHTML = "Contact Number Must be of Length 10 digits";
+			}
+	}
+
+	function CheckDestinationInput() {
+		var dest = document.getElementById('dest').value;
+		var destInit = dest.charAt(0);
+		var destFirst = destInit.toUpperCase();
+		var destErr = document.getElementById('destCapCheck');
+
+		if (destInit == destFirst) {
+			destErr.innerHTML = "";
+		} else {
+			destErr.innerHTML = "Contact Destination SHould Start with Caps";
+		}
+
+		// Validation for Destination Length
+
+		var destLen = dest.length;
+		console.log(destLen);
+
+		if (destLen < 3) {
+			var destLengthCheckErr = document.getElementById('destLengthCheck');
+			destLengthCheck.innerHTML = "Contact Destination Should be in Range of 3-12 characters";
+		} else if (destLen > 12) {
+			var destLengthCheckErr = document.getElementById('destLengthCheck');
+			destLengthCheck.innerHTML = "Contact Destination Should be in Range of 3-12 characters";
+		}
+	}
+
+	function CheckAboutInput() {
+		var about = document.getElementById('about').value;
+		var aboutInit = about.charAt(0);
+		var aboutFirst = aboutInit.toUpperCase();
+		var aboutErr = document.getElementById('aboutCapCheck');
+
+		if (aboutInit == aboutFirst) {
+			aboutErr.innerHTML = "";
+		} else {
+			aboutErr.innerHTML = "About Should Start with Caps";
+		}
+		
+		
+		var aboutLen = about.length;
+		console.log(aboutLen);
+	
+		if (aboutLen>100) {
+			var aboutLengthCheckErr = document.getElementById('aboutLenCheck');
+			aboutLengthCheckErr.innerHTML = "About Field Should Not Exceed Max of 100 Characters";
+	}
+}
+</script>
+ -->
+
+</head>
+
+<body class="bg-dark text-center">
+	<div style="margin-left: 300px;">
+
+
+
+		<div
+			class="card  text-danger fw-bold m-2 mt-4 p-2 text-center border-danger"
+			style="width: 900px; line-height: 52px; border-radius: 50px; background-color: pink;box-shadow: 18px 15px 5px grey;">
+			<div class="card-header">
+				<h3>Sign Up</h3>
+			</div>
+
+			<div class="card-body ">
+				<div class="text-center text-white">
+					<h5 style="font-weight: bold; font-family: cursive; color: black">
+						<span th:text="${editMsg}"></span>
+					</h5>
+				</div>
+
+
+
+				<form th:action="@{/user/doRegistration}" method="post"
+					th:object="${us}">
+					
+
+					<div>
+						<label for="cName" > User Name </label>
+						<div>
+							<input type="text"  class="form-control " th:field="*{uName}">
+									
+						</div>
+						<div id="cnameCapCheck"></div>
+						<div id="cnameLengthCheck"></div>
+					</div>
+
+					<div>
+						<label for="cNickName"  > password </label>
+						<div id="input">
+							<input class="form-control" type="text" onblur="CheckNickNameInput()" th:field="*{pwd}">
+							
+						</div>
+						
+						<div id="cnicknameLengthCheck"></div>
+						
+					</div>
+
+
+					<div>
+						
+						Roles
+						<br>
+						<input type="checkbox" th:value="User" th:field="*{roles}">User
+						<input type="checkbox" th:value="Admin" th:field="*{roles}">Admin
+						
+						
+					</div>
+					
+
+                  <button class="btn btn-dark w-100 mt-2" >SignUp</button>
+				</form>
+
+
+			</div>
+		</div>
+	</div>
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+		integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+		integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+		crossorigin="anonymous"></script>
+</body>
+</html>
+

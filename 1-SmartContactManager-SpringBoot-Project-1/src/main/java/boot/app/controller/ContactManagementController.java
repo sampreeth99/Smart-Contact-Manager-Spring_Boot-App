@@ -4,9 +4,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.BeanUtils;
@@ -34,10 +40,6 @@ import boot.app.model.ContactManagerModel;
 import boot.app.repository.IContactDetailsRepository;
 import boot.app.validation.FormADDValidation;
 import boot.app.validation.FormEDITValidation;
-import jakarta.servlet.ServletContext;
-import jakarta.servlet.ServletOutputStream;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/management")
@@ -70,6 +72,8 @@ public class ContactManagementController {
 
 	@Autowired
 	private FormEDITValidation validEdit;
+	
+	
 
 	
 	@GetMapping("/add")
@@ -78,7 +82,6 @@ public class ContactManagementController {
 	}
 
 	@PostMapping("/save")
-
 	public String saveContact(@ModelAttribute("cd") ContactManagerModel cd, Map<String, Object> map,
 			BindingResult errors) {
 		
@@ -138,6 +141,7 @@ public class ContactManagementController {
 		return "hello";
 	}
 
+	/*
 	@GetMapping("/showAllContacts")
 	public String showContacts(Map<String, Object> map) {
 		List<ContactDetails> page = showService.showAllCon();
@@ -146,6 +150,8 @@ public class ContactManagementController {
 
 		return "ShowPartialContacts";
 	}
+	*/
+	
 
 	@GetMapping("/showAllContactsByPage")
 	public String showContactsbypagination(
@@ -168,8 +174,7 @@ public class ContactManagementController {
 
 		String name = downService.oNameOfPic(cid);
 		map.put("pic", name);
-		System.out.println("oName from controller" + name);
-
+		
 		return "moreInfo";
 	}
 
@@ -251,7 +256,11 @@ public class ContactManagementController {
 	}
 
 	@GetMapping("/report/menu")
-	public String showReportGenerationPage() {
+	public String showReportGenerationPage(Principal principal) {
+		String n=principal.getName();
+		System.out.println("name from principla"+n);
+		
+		
 		return "reportMenu";
 	}
 
@@ -268,5 +277,4 @@ public class ContactManagementController {
 			return "PDFreport";
 
 	}
-
 }

@@ -32,11 +32,64 @@
 
 </head>
 <body>
+	<script type="text/javascript">
+function Search(){
+	
+	var  responseData;
+	
+	var searchInput=document.getElementById("se").value;
+	
+	if (searchInput=='') {
+		
+	}
+	else{
 
+		var url="http://localhost:4009/api/search/"+`${searchInput}`;
+		
+		   fetch(url).then((response)=>{
+			   return response.json()
+		   })	.then((data)=>{
+			
+			   let 	text=`<div class="list-group ms-4 my-1  "  >`;
+			   
+			   data.forEach((con)=>{
+				   var id=con.cid;
+				   text +=`
+				 <span>	   <img src="../../../images/${con.originalPicName}" style="height: 50px;width: 50px;border-radius: 10px;"></span>
+				   <a href="/management/moreContactInfo?cid=${con.cid}" class="m-1" style="font-size: 25px;text-decoration: none;color: black;border-bottom: solid 1px thin ;"> ${con.cname}</a> `;
+			   });
+			   
+			   text += `</div>`;
+			   
+			   document.getElementById("search-r").innerHTML=text;
+			   
+			   
+		   })
+	}
+	
+	
+}
+
+</script>
 	<div>
+	
+	<div style="display: flex;"></div>
+			<div style="width: 1480px;border-bottom: solid 1px thin ;" class="mx-auto">
+			<span style="text-decoration: none;color: grey;"></span>
+			
+			<img alt="" src="" style="border-radius: 10px;">
+			
+			<input onkeyup="Search()"  id="se" type="search"
+				class="form-control mt-1 mb-3 pb-2 fw-lighter  text-dark"
+				placeholder="Search Your Contacts By Name"
+				style="font-style: oblique; font-size: 25px;position: relative">
+				
+		</div >
+		<div id="search-r" class="bg-white  ms-2" style="position: absolute;z-index: 1;width: 1480px;">
+		</div>
 		<table
 			class="table table-hover table-dark text-center text-white table-stripped me-2"
-			style="width: 1490px; background-color: grey; height: 580px; font-size: 25px;">
+			style="width: 1490px; background-color: grey; height: 580px; font-size: 25px; position: relative;">
 			<thead>
 				<tr class="thead-tr">
 					<th th:text="#{sno.title}"></th>
@@ -54,34 +107,32 @@
 						th:href="@{/management/moreContactInfo(cid=${con.cId})}" target=""
 						style="text-decoration: none;" th:text="#{more.hyper.link.title}"></a></td>
 
+				</tr >
 
-				</tr>
-				
 
 			</tbody>
 		</table>
 	</div>
-						<nav aria-label="Page navigation example"
-						style="margin-left: 550px;">
-						<ul class="pagination">
-							<li th:if="${currPageNo != 0}" class="page-item"><a
-								class="page-link"
-								th:href="@{'/management/showAllContactsByPage?page='+${currPageNo-1}}"
-								th:text="#{pagination.previous.title}"></a></li>
-							<li th:classappend="${currPageNo==p-1?'active':''}"
-								class="page-item" th:each="p:${#numbers.sequence(1,8,1)}"><a
-								class="page-link"
-								th:href="@{'/management/showAllContactsByPage?page='+${p-1}}"
-								th:text="${p}"></a></li>
+	<nav aria-label="Page navigation example" style="margin-left: 550px;">
+		<ul class="pagination">
+			<li th:if="${currPageNo != 0}" class="page-item"><a
+				class="page-link"
+				th:href="@{'/management/showAllContactsByPage?page='+${currPageNo-1}}"
+				th:text="#{pagination.previous.title}"></a></li>
+			<li th:classappend="${currPageNo==p-1?'active':''}" class="page-item"
+				th:each="p:${#numbers.sequence(1,8,1)}"><a class="page-link"
+				th:href="@{'/management/showAllContactsByPage?page='+${p-1}}"
+				th:text="${p}"></a></li>
 
-							<li th:if="${currPageNo+1 != totalPages}" class="page-item"><a
-								class="page-link"
-								th:href="@{'/management/showAllContactsByPage?page='+${currPageNo+1}}"
-								th:text="#{pagination.next.title}"></a></li>
+			<li th:if="${currPageNo+1 != totalPages}" class="page-item"><a
+				class="page-link"
+				th:href="@{'/management/showAllContactsByPage?page='+${currPageNo+1}}"
+				th:text="#{pagination.next.title}"></a></li>
 
-						</ul>
-					</nav>
-				
+		</ul>
+		<img alt="" src="" style="display: flex;">
+	</nav>
+
 
 
 	<link rel="stylesheet"

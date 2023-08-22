@@ -16,6 +16,12 @@ import boot.app.repository.IContactDetailsRepository;
 @RequestMapping("/contactManager")
 public class SmartContactManagerMiscelleniousController {
 
+	@GetMapping("/common")
+	public String getCommon() {
+		return "common_welcome";
+	}
+
+	
 	@GetMapping("/")
 	public String getIndex(Map<String, Object> map) {
 		return "welcome";

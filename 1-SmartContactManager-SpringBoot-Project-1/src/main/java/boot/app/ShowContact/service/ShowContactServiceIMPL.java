@@ -24,6 +24,7 @@ public class ShowContactServiceIMPL implements IShowContactService {
 		return conRepo.findAll();
 	}
 
+	/*
 	@Override
 	public Object[] showParticularDetails(Integer id) {
 		Object cd = conRepo.getContactInfoByIdForEditForm(id);
@@ -31,6 +32,7 @@ public class ShowContactServiceIMPL implements IShowContactService {
 		return cdo;
 
 	}
+	*/
 
 	ContactDetails d = null;
 
