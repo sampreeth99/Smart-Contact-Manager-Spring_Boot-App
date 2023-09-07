@@ -9,131 +9,16 @@
 
 </style>
 
-<!-- 
-<script type="text/javascript">
-	function CheckNameInput() {
-		var cname = document.getElementById('cName').value;
-
-		var cnameIn = cname.charAt(0);
-
-		var cnameU = cnameIn.toUpperCase();
-
-		var cnameErr = document.getElementById('cnameCapCheck');
-
-		if (cnameIn == cnameU) {
-			cnameErr.innerHTML = "";
-		} else {
-
-			cnameErr.innerHTML = "Name Should Start With Caps";
-		}
-
-		var cname = document.getElementById('cName').value;
-		var cnameLen = cname.length;
-		console.log(cnameLen);
-
-		if (cnameLen < 4) {
-			var cnameLengthErr = document.getElementById('cnameLengthCheck');
-			cnameLengthErr.innerHTML = "Contact name Should be in Range of 4-15 characters";
-
-		} else if (cnameLen > 15) {
-			var cnameLengthErr = document.getElementById('cnameLengthCheck');
-
-			cnameLengthErr.innerHTML = "Contact name Should be in Range of 4-15 characters";
-
-		}
-	}
-
-	function CheckNickNameInput() {
-		var cnickname = document.getElementById('cNickName').value;
-		var cnicknameLen = cnickname.length;
-		console.log(cnicknameLen);
-
-		if (cnicknameLen < 4) {
-			var cnicknameLengthErr = document
-					.getElementById('cnicknameLengthCheck');
-			cnicknameLengthErr.innerHTML = "Nick name Should be in Range of 4-8 characters";
-
-		} else if (cnicknameLen > 8) {
-			var cnicknameLengthErr = document
-					.getElementById('cnicknameLengthCheck');
-
-			cnicknameLengthErr.innerHTML = "Nick name Should be in Range of 4-8 characters";
-
-		}
-	}
-	
-	 function CheckContactNo() {
-		 var cno = document.getElementById('cNo').value;
-			var cnoLen = cno.length;
-			console.log(cnoLen);
-
-			if (cnoLen!=10) {
-				var cNoErr = document
-						.getElementById('cNoErr');
-				cNoErr.innerHTML = "Contact Number Must be of Length 10 digits";
-			}
-	}
-
-	function CheckDestinationInput() {
-		var dest = document.getElementById('dest').value;
-		var destInit = dest.charAt(0);
-		var destFirst = destInit.toUpperCase();
-		var destErr = document.getElementById('destCapCheck');
-
-		if (destInit == destFirst) {
-			destErr.innerHTML = "";
-		} else {
-			destErr.innerHTML = "Contact Destination SHould Start with Caps";
-		}
-
-		// Validation for Destination Length
-
-		var destLen = dest.length;
-		console.log(destLen);
-
-		if (destLen < 3) {
-			var destLengthCheckErr = document.getElementById('destLengthCheck');
-			destLengthCheck.innerHTML = "Contact Destination Should be in Range of 3-12 characters";
-		} else if (destLen > 12) {
-			var destLengthCheckErr = document.getElementById('destLengthCheck');
-			destLengthCheck.innerHTML = "Contact Destination Should be in Range of 3-12 characters";
-		}
-	}
-
-	function CheckAboutInput() {
-		var about = document.getElementById('about').value;
-		var aboutInit = about.charAt(0);
-		var aboutFirst = aboutInit.toUpperCase();
-		var aboutErr = document.getElementById('aboutCapCheck');
-
-		if (aboutInit == aboutFirst) {
-			aboutErr.innerHTML = "";
-		} else {
-			aboutErr.innerHTML = "About Should Start with Caps";
-		}
-		
-		
-		var aboutLen = about.length;
-		console.log(aboutLen);
-	
-		if (aboutLen>100) {
-			var aboutLengthCheckErr = document.getElementById('aboutLenCheck');
-			aboutLengthCheckErr.innerHTML = "About Field Should Not Exceed Max of 100 Characters";
-	}
-}
-</script>
- -->
-
 </head>
 
 <body class="bg-dark text-center">
-	<div style="margin-left: 300px;">
+	<div style="margin-left: 100px;">
 
 
 
 		<div
 			class="card  text-danger fw-bold m-2 mt-4 p-2 text-center border-danger"
-			style="width: 900px; line-height: 52px; border-radius: 50px; background-color: pink;box-shadow: 18px 15px 5px grey;">
+			style="width: 450px; line-height: 25px; border-radius: 50px; background-color: pink;box-shadow: 18px 15px 5px grey;">
 			<div class="card-header">
 				<h3>Edit Contact</h3>
 			</div>
@@ -212,7 +97,7 @@
 						<div>
 							<label  th:text="#{contactabout.title}">About</label>
 						</div>
-						<textarea rows="1" cols="57" name="about" th:field="*{about}"
+						<textarea rows="1" cols="50" name="about" th:field="*{about}"
 							onblur="CheckAboutInput()"></textarea>
 												<p class="text-dark" th:if="${#fields.hasErrors('about')}"
 							th:errors="*{about}" />

@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
@@ -31,6 +32,12 @@ public class Application {
 	public BeanNameViewResolver createBNVR() {
 		BeanNameViewResolver b=new BeanNameViewResolver();
 		b.setOrder(Ordered.HIGHEST_PRECEDENCE);
+		return b;
+	}
+	
+	@Bean
+	public BCryptPasswordEncoder createEncoder() {
+		BCryptPasswordEncoder b=new BCryptPasswordEncoder();
 		return b;
 	}
 	

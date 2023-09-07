@@ -63,13 +63,13 @@
 <body style="background-color: grey" th:each="cd:${contact}">
     <div >
        
-        <div class="card bg-dark text-center" style="width: 700px;height: 650px; margin-left: 300px;margin-top: 25px;">
-            <div class="card-header bg-white " style="width: 700px;height: 320px;"  >
+        <div class="card bg-dark text-center" style="width: 300px;height: 650px; margin-left: 200px;margin-top: 25px;">
+            <div class="card-header bg-white " style="width: 300px;height: 200px;"  >
                      
                       <div >
                     
 
-                   <button  data-bs-toggle="modal" data-bs-target="#mod" class="bg-white" style="border-radius: 25px;border-style: none;margin-top: 10px;"> <img alt="Profile pic" th:src="@{'../../../images/'+${pic}}" style="width: 240px;height: 190px;border-radius: 30px;border: 2px solid black" >
+                   <button  data-bs-toggle="modal" data-bs-target="#mod" class="bg-white" style="border-radius: 25px;border-style: none;margin-top: 10px;"> <img alt="Profile pic" th:src="@{'../../../images/'+${pic}}" style="width: 120px;height: 120px;border-radius: 30px;border: 2px solid black" >
              </button>
                     </div>
                     
@@ -81,7 +81,7 @@
                    
 					
             </div>
-            <div class="card-body " style="margin-top: 10px;" >
+            <div class="card-body " style="margin-top: 10px;height: 200px;" >
                 <div class="card-text text-white" >
                   <div  >
                   
@@ -111,13 +111,14 @@
 
             </div>
             
-            <div class="card-footer" style="width: px;height: 60px;background-color: white;" >
+            <div class="card-footer" style="width:500 px;height: 100px;background-color: white;" >
             
                     <div style="margin-top:px;">
                     <a class="ps-4 " th:href="@{/management/edit(no=${cd.cId})}" title="Edit" style="text-decoration: none;"> <span style="font-size: 20px; margin-right:25px; " class="bi bi-person-gear " th:text="#{edit.button.title}"></span></a>
                       
-                    <a class="ps-4" th:href=@{/management/delete(no1=${cd.cId})} title="Delete Contact" style="text-decoration: none;"><span style="font-size: 20px;" class="bi bi-trash-fill" th:text="#{delete.button.title}"></span></a>
+                    <a class="ps-4" th:href=@{/management/delete(no1=${cd.cId})} title="Delete Contact" style="text-decoration: none;"><span style="font-size: 20px;" class="bi bi-trash-fill" ></span></a>
                     
+                    <br>
                      <a class="ps-4" th:href=@{/contactManager/update/profile(uploadId=${cd.cId})} title="Change Profile" style="text-decoration: none;"><span style="font-size: 20px;" class="bi bi-pencil-fill" th:text="#{changeprofile.button.title}"></span></a>
                    
                    

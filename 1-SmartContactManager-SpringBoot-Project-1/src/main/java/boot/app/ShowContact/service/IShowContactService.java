@@ -13,7 +13,7 @@ public interface IShowContactService {
 	
 	public List<ContactDetails> showAllCon();
 	
-	public Object[] showParticularDetails(Integer id);
+	//public Object[] showParticularDetails(Integer id);
 	
 	public ContactDetails getAllContactDetailsById(Integer id) ;
 	

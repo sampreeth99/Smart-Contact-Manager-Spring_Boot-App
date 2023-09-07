@@ -1,5 +1,5 @@
     <!DOCTYPE html>
-    <html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="base(page)" >
+    <html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="base(page1)" >
     <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,53 +22,64 @@
     border: solid grey;
     }
     
-    button a{
-    text-decoration: none;
-    font-size: 20px;
     
-    }
        
     
     
     </style>
     </head>
     <body style="background-color: grey;" >
-    <div>
-    <header  class="  mt-2 ms-2 me-2 mb-1 p-2" style="background-color: black;color: white;font-family:inherit;display: grid;
-     grid-template-columns: 11fr 2fr; ">
+    <div class="container-fluid ">
+    <header  class="  " style="background-color: black;color: white;width: 1;display: grid;grid-template-columns: 10fr 2fr;">
     
     
-    <h1 style="text-shadow: 2px 3px 3px red;margin-left: 600px;" th:text="#{contact.manager.main.title}"> </h1>
+   
+    <h1 style="text-shadow: 2px 3px 3px red;" class="ms-4"  th:text="#{contact.manager.main.title}"> </h1>
     
+    <div class="my-1 " style="font-size: 20px" >
+    
+    <a th:href="@{/logout}" ><button class="btn btn-danger">Logout</button></a>
+    
+    </div>
     </header>
-    <section >
-    <nav style="background-color: pink;height: 720px;border-radius: 10px;" class="ms-2">
+    <section style="margin-left: -8px;" >
     
-    <div id="navc" style="margin-top: 50px;font-size:35px;">
+    <nav style="background-color: pink;height: 370px;border-radius: 10px;" >
+    
+    <div id="navc" style="margin-top: 50px; "class="container-fluid">
+   <a href="/contactManager/" ><button class="btn btn-dark ms-4 " style="width:132 px; "  th:text="#{button.home}"><span class="bi bi-house-door-fill" ></span></button></a>
+ 
   
-   <a href="/contactManager/" ><button class="btn btn-dark  m-2" style="height: 50px;width: 180px; margin-bottom: 30px;"  th:text="#{button.home}"><span class="bi bi-house-door-fill" ></span></button></a>
+   <a href="/management/add" target="_blank" ><button class="btn btn-dark  mt-1"  style="width: 132px;" th:text="#{button.addcontacts}" ><span class="bi bi-person-add " style="font-size: 20px;" ></span></button></a>
    
-    <a href="/management/showAllContactsByPage" ><button class="btn btn-dark  m-2" style="height: 50px;width: 180px " th:text="#{button.mycontacts}"><span class="bi bi-file-person-fill" style="font-size: 25px;padding: 3px" ></span></button></a>
+     <a href="/management/showAllContactsByPage" ><button class="btn btn-dark  mt-1 " style="width: 132px " th:text="#{button.mycontacts}"><span class="bi bi-file-person-fill" style="font-size: 20px;" ></span></button></a>
+  
+  
+       <a href="/management/report/menu" target="_blank" ><button class="btn btn-dark  mt-1"  style="width: 132px;" th:text="#{button.report}" ><span class="bi bi-person-add " style="font-size: 20px;" ></span></button></a>
    
-     <a href="/management/add" target="_blank" ><button class="btn btn-dark  m-1"  style="height: 50px;width: 180px;" th:text="#{button.addcontacts}"><span class="bi bi-person-add m-2" style="font-size: 25px;padding: 3px;" ></span></button></a>
+  
+  
    
-     <a href="/management/report/menu"  ><button class="btn btn-dark  m-2"  style="height: 50px;width: 180px;margin-left: 0px;padding: 0px"  th:text="#{button.report}" ><span class="" style="font-size: 25px;padding: 3px;"></span></button></a>
-     
    
-   <details  class="bg-dark text-white m-2 p-2" style="width: 180px;font-size: 25px;border-radius: 5px;">
+    
+  <details  class="bg-dark text-white mt-2" style="width: 130px;font-size: 20px;border-radius: 5px;">
    <summary th:text="#{button.language}"></summary>
   <button class="btn "> <a href="?lang=en_Us" class="ms-4" >English</a><br></button>
   <button class="btn "> <a href="?lang=fr_FR" class="ms-4" >French</a></button> 
    </details>  
+  
+      
    
       </div>
+   
+   
 
     </nav>
     <main>
     
     
    
-   <div th:replace="${page}"></div>
+   <div th:replace="${page1}"></div>
         
     </main>
     </section>

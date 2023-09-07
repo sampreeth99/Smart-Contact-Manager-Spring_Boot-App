@@ -19,8 +19,8 @@ import com.lowagie.text.Table;
 import com.lowagie.text.pdf.PdfWriter;
 
 import boot.app.entity.ContactDetails;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Component("PDFreport")
 public class PDFReportGenerator extends AbstractPdfView{

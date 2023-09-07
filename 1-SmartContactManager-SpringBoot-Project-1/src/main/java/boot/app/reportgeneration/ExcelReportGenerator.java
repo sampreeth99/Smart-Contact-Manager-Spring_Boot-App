@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.document.AbstractXlsView;
 
 import boot.app.entity.ContactDetails;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Component("xlReport")
 public class ExcelReportGenerator extends AbstractXlsView {

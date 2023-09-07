@@ -1,5 +1,6 @@
 package boot.app.controller;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +24,10 @@ public class SmartContactManagerMiscelleniousController {
 
 	
 	@GetMapping("/")
-	public String getIndex(Map<String, Object> map) {
+	public String getIndex(Map<String, Object> map,Principal principal) {
+		String loggedUser=principal.getName();
+		map.put("loggedUserName", loggedUser);
+		
 		return "welcome";
 	}
 

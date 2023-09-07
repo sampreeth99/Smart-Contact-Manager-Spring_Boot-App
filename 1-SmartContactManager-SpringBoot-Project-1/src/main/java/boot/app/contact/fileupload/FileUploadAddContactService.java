@@ -11,7 +11,6 @@ public interface FileUploadAddContactService {
 	
 	public Boolean uploadProfilePicToServerFolder(MultipartFile profile,ContactDetails contactDetails);
 	
-	public void deleteOldProfilePic(Integer id);
 	
 	
 

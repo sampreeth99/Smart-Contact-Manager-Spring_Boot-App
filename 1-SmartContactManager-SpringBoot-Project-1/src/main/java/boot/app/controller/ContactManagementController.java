@@ -256,9 +256,7 @@ public class ContactManagementController {
 	}
 
 	@GetMapping("/report/menu")
-	public String showReportGenerationPage(Principal principal) {
-		String n=principal.getName();
-		System.out.println("name from principla"+n);
+	public String showReportGenerationPage() {
 		
 		
 		return "reportMenu";

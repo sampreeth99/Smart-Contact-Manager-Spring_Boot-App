@@ -43,5 +43,7 @@ public interface IContactDetailsRepository extends JpaRepository<ContactDetails,
 	public Object getContactInfoByIdForEditForm(Integer id);
 	
 	
+	public List<ContactDetails> findBycNameContaining(String characters);
+	
 
 }
